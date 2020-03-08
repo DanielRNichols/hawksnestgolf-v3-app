@@ -31,7 +31,7 @@ export interface IItemsListParams {
 export interface IToolbarParams {
   tooltipTitle: string, 
   tooltipPlacement: string, 
-  callback: () => void, 
+  onClick: () => void, 
   glyph: string
 }
 
@@ -106,13 +106,13 @@ export abstract class ItemsList {
         this.router.navigateToRoute(addRoute);
     }
 
-    // editItem(item, editRoute) {
-    //     console.log(`Edit ${this.itemDesc}`);
-    //     this.router.navigateToRoute(editRoute, { id: item.id });
-    // }
+    editItem(item, editRoute) {
+        console.log(`Edit ${this.itemDesc}`);
+        this.router.navigateToRoute(editRoute, { id: item.id });
+    }
 
-    // deleteItem(item) {
-    //     console.log(`Delete ${this.itemDesc} ${item.id} - ${item.name}?`);
+    deleteItem(item) {
+        console.log(`Delete ${this.itemDesc} ${item.id} - ${item.name}?`);
     //     let prompt = `Delete ${this.itemDesc} : ${item.id} - ${item.name}?`;
     //     this.dialogService.open({ viewModel: OKCancelDialog, model: prompt, lock: false })
     //         .whenClosed(response => {
@@ -129,7 +129,7 @@ export abstract class ItemsList {
     //             }
     //         });
 
-    // }
+    }
 
 
     // removeItem(id) {

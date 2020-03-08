@@ -1,4 +1,3 @@
-import {HttpClient} from 'aurelia-fetch-client';
 import { autoinject } from 'aurelia-framework';
 import {IBet} from '../../models/IBet';
 import { ApiDataService } from "./apiDataService";
@@ -25,6 +24,10 @@ export class BetsApi implements IHawksNestGolfApi {
 
   public async add(bet: IBet) {
     return this.api.post(this.resourceName, bet);
+  }
+
+  public async update(bet: IBet) {
+    return this.api.put(this.resourceName, bet);
   }
 
 }

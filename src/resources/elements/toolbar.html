@@ -1,0 +1,12 @@
+<template>
+  <!-- <require from="resources/attributes/tooltip"></require> -->
+  <!-- tooltip="title.bind:button.tooltipTitle; placement.bind:button.tooltipPlacement" -->
+ 
+  <div class="hidden-print">
+    <button repeat.for="button of toolbar"
+       class="btn btn-outline-primary btn-sm" 
+       click.delegate="button.onClick()">
+      <span class.bind="button.glyph"  style="color:blue" />
+    </button>
+  </div>
+</template>

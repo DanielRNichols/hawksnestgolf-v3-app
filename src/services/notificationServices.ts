@@ -22,25 +22,25 @@ export class NotificationServices {
         toastr.options.timeOut = timeOut;
     }
 
-    warning (title: string, msg: string) {
+    warning (msg: string, title: string) {
         if (this.showNotifications)
             toastr.warning(title, msg);
         console.log('Warning: ' + title + ((title == '') ? '' : ':') + msg);
     }
 
-    error (title: string, msg: string) {
+    error (msg: string, title: string) {
         if (this.showNotifications)
             toastr.error(title, msg);
         console.log('Error: ' + title + ((title == '') ? '' : ':') + msg);
     }
 
-    success (title: string, msg: string) {
+    success (msg: string, title: string) {
         if (this.showNotifications)
             toastr.success(title, msg);
         console.log('Success: ' + title + ((title == '') ? '' : ':') + msg);
     }
 
-    info (title: string, msg: string) {
+    info (msg: string, title: string) {
         if (this.showNotifications)
             toastr.info(title, msg);
         console.log('Info: ' + title + ((title == '') ? '' : ':') + msg);

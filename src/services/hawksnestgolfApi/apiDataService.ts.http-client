@@ -1,0 +1,137 @@
+import {HttpClient} from 'aurelia-http-client';
+import { autoinject } from 'aurelia-framework';
+import { IItem } from '../../models/IItem';
+import { IQueryParams, QueryParamsService } from 'services/queryParamsService';
+import { ApiError } from 'models/ApiError';
+
+
+@autoinject()
+export class ApiDataService {
+
+  isBusy: boolean = false;
+  constructor(private httpClient: HttpClient, 
+              private queryParamsService: QueryParamsService
+             ) {
+    this.httpClient = httpClient;
+
+    this.httpClient.configure(config => {
+      config
+        .withBaseUrl('http://localhost/hawksnestgolf-v3/api/')
+      }
+    );
+  }
+
+  async fetch<T>(resourceName: string, params: IQueryParams = {}): Promise<T[] | ApiError>  {
+    this.isBusy = false;
+    const queryString = this.queryParamsService.getQueryString(params);
+    const url = `${resourceName}${queryString}`;
+    console.log(url);
+
+    try {
+      this.isBusy = true;
+      const response = await this.httpClient.get(url);
+      const data = response.content;
+      console.log(data);
+      this.isBusy = false;
+      if(response.isSuccess) {
+        return data as T[];
+      } else {
+        return new ApiError(response.statusCode, data.message);
+      }
+    } catch {
+      return new ApiError(500, "Server error");
+    }
+  }
+
+  async fetchJson(resourceName: string, params: IQueryParams = {}): Promise<any | ApiError>  {
+    const queryString = this.queryParamsService.getQueryString(params);
+    const url = `${resourceName}${queryString}`;
+    console.log(url);
+
+    try {
+      const response = await this.httpClient.get(url);
+      const data = response.content;
+      console.log(data);
+      if(response.isSuccess) {
+        console.log(data);
+        return data;
+      } else {
+        return new ApiError(response.statusCode, data.message);
+      }
+    } catch {
+      return new ApiError(500, "Server error");
+    }
+  }
+
+  async fetchById(resourceName: string, id: string | number): Promise<any | ApiError>  {
+    const url = `${resourceName}/${id}`;
+    console.log(url);
+    try {
+      const response = await this.httpClient.get(url);
+      const data = response.content;
+      console.log(data);
+      if(response.isSuccess) {
+        console.log(data);
+        return data;
+      } else {
+        return new ApiError(response.statusCode, data.message);
+      }
+    } catch {
+      return new ApiError(500, "Server error");
+    }
+  }
+
+  async post(resourceName: string, item: IItem): Promise<any | ApiError> {
+    const url = resourceName;
+    console.log(`In post: url = ${url}`);
+    try {
+      const response = await this.httpClient.post(url, item);
+      const data = response.content;
+      console.log(data);
+      if(response.isSuccess) {
+        console.log(data);
+        return data;
+      } else {
+        return new ApiError(response.statusCode, data.message);
+      }
+    } catch {
+      return new ApiError(500, "Server error");
+    }
+  }
+  
+  async put(resourceName: string, item: IItem): Promise<any | ApiError> {
+    const url = `${resourceName}/${item.id}`;
+    console.log(url);
+    try {
+      const response = await this.httpClient.put(url, item);
+      const data = response.content;
+      console.log(data);
+      if(response.isSuccess) {
+        console.log(data);
+        return data;
+      } else {
+        return new ApiError(response.statusCode, data.message);
+      }
+    } catch {
+      return new ApiError(500, "Server error");
+    }
+  }
+  
+  async delete(resourceName: string, id: string | number): Promise<boolean | ApiError> {
+    const url = `${resourceName}/${id}`;
+    console.log(url);
+    try {
+      const response = await this.httpClient.delete(url);
+      const data = await response.content();
+      console.log(data);
+      if(response.isSuccess) {
+        console.log(data);
+        return data.success;
+      } else {
+        return new ApiError(response.statusCode, data.message);
+      }
+    } catch {
+      return new ApiError(500, "Server error");
+    }
+  }
+}

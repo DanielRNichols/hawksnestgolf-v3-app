@@ -7,7 +7,6 @@ import { ApiError } from 'models/ApiError';
 
 @autoinject()
 export class ApiDataService {
-  resourceName: string;
 
   constructor(private httpClient: HttpClient, 
               private queryParamsService: QueryParamsService
@@ -19,10 +18,10 @@ export class ApiDataService {
         .useStandardConfiguration()
         .withBaseUrl('http://localhost/hawksnestgolf-v3-api/')
         .withDefaults({
-    //       credentials: 'same-origin',
+           credentials: 'same-origin',
            headers: {
              'Accept': 'application/json',
-    //         //'X-Requested-With': 'Fetch'
+    //        'X-Requested-With': 'Fetch'
            }
         })
         .withInterceptor({
@@ -94,14 +93,36 @@ export class ApiDataService {
   }
 
   async post(resourceName: string, item: IItem): Promise<any | null> {
-    const url = this.resourceName;
-    console.log(url);
+    const url = resourceName;
+    console.log(`In post: url = ${url}`);
     try {
-      const response = await this.httpClient.fetch(url, {method: 'post', body: json(item)});
+      const response = await this.httpClient.fetch(url, {method: 'POST', body: json(item)});
       return await response.json();
     } catch {
       return null;
     }
   }
   
+  async put(resourceName: string, item: IItem): Promise<any | null> {
+    const url = `${resourceName}/${item.id}`;
+    console.log(url);
+    try {
+      const response = await this.httpClient.fetch(url, {method: 'PUT', body: json(item)});
+      return await response.json();
+    } catch {
+      return null;
+    }
+  }
+  
+  async delete(resourceName: string, id: string | number): Promise<boolean | null> {
+    const url = `${resourceName}/${id}`;
+    console.log(url);
+    try {
+      const response = await this.httpClient.fetch(url, {method: 'DELETE'});
+      const json = await response.json();
+      return json.success;
+    } catch {
+      return null;
+    }
+  }
 }

@@ -1,0 +1,108 @@
+.golferLbTable, .divider {
+  clear: both;
+}
+
+.golferLbTable,
+.teamLbTable,
+.teamTable {
+  /*  font-family: 'Permanent Marker', 'Arial Narrow', times, serif;*/
+  font-size: 0.9em;
+  display: inline;
+  float: left;
+  margin-left: 15px;
+  border-collapse: collapse;
+  border: none;
+  text-align: left;
+  color: #008;
+  padding: 1em 1em 0 0;
+}
+
+.golferLbTable th,
+.golferLbTable td,
+.teamLbTable th,
+.teamLbTable td,
+.teamTable th,
+.teamTable td {
+  /*  font-weight: normal;*/
+  border: 1.2px solid black;
+  padding: 2px 4px;
+  margin: 0;
+}
+
+.golferLbTable th,
+.teamLbTable th,
+.teamTable th {
+  font-size: 1em;
+  color: white;
+  /*  font-weight: normal;*/
+  background-color: #7087b1;
+}
+
+
+.teamLbTable tr.lbTitle th,
+.golferLbTable tr.lbTitle th,
+.teamTable tr.lbTitle th {
+  font-size: 1.4em;
+  background-color: red;
+}
+
+
+
+
+.teamLbTable .teamPos,
+.teamLbTable .teamPick {
+  text-align: center;
+  width: 30px;
+}
+
+.teamLbTable .teamName {
+  width: 100px;
+}
+
+.teamLbTable .numActive {
+  text-align: center;
+  width: 75px;
+}
+
+
+
+
+.teamLbTable .teamScore,
+.teamLbTable .teamPoints {
+  text-align: center;
+  width: 70px;
+}
+
+
+
+
+
+
+img.flag {
+  width: 25px;
+  /*height: 10px;*/
+}
+
+
+.teamTable .pickNum {
+  text-align: center;
+  width: 20px;
+}
+
+.teamTable .golferScore,
+.teamTable .golferThru,
+.teamTable .golferPos,
+.teamTable .golferRound,
+.teamTable .golferTotal,
+.teamTable .golferMove,
+.teamTable .golferPoints,
+.teamTable .dayMoneyScore,
+.teamTable .pointTotal {
+  text-align: center;
+  width: 40px;
+}
+
+.teamTable .golferName {
+  width: 200px;
+}
+

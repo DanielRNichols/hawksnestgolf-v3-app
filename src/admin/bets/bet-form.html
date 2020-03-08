@@ -1,0 +1,44 @@
+<template>
+    <div class="container">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h3>${formTitle}</h3>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Name" class="form-control"
+                                   value.bind="bet.name" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Default Amount</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Default Amount" class="form-control"
+                                   value.bind="bet.defAmount" />
+                        </div>
+                    </div>
+
+                    <input type="button"
+                           click.delegate="save()"
+                           class="col-sm-offset-2 btn btn-primary" value="Save" />
+
+                    <input type="button"
+                           click.delegate="cancel()"
+                           class="btn btn-primary" value="Cancel" />
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</template>

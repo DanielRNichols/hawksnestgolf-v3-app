@@ -1,4 +1,3 @@
-import {HttpClient} from 'aurelia-fetch-client';
 import { autoinject } from 'aurelia-framework';
 import {IEvent} from '../../models/IEvent';
 import { ApiDataService } from "./apiDataService";

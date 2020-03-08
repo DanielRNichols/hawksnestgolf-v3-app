@@ -1,7 +1,35 @@
 <template>
+  <require from="./styles/hawksnestgolf.css"></require>
   <require from="bootstrap/css/bootstrap.min.css"></require>
   <require from="@fortawesome/fontawesome-free/css/all.min.css"></require>
+  <require from="toastr/build/toastr.min.css"></require>
+  <require from="./resources/elements/logo/logo.html"></require>
 
-  <i class="fas fa-home"></i>
-  <h1>${message}</h1>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Hawk's Nest Golf</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li repeat.for="row of router.navigation"
+          class="nav-item ${row.isActive ? 'active' : ''}">
+          <a class="nav-link" href.bind="row.href">${row.title}</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+  <router-view></router-view>
+
+  <div id="footer" class="container hidden-print">
+    <hr />
+    <div class="text-center">
+      <logo version=${version}></logo>
+    </div>
+  </div>
+
 </template>
