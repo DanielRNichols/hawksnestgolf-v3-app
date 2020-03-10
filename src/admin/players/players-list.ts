@@ -2,12 +2,12 @@ import { autoinject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Router } from "aurelia-router";
 import { ItemsList } from '../../services/itemsListService';
-import { PlayersApi } from '../../services/hawksnestgolfApi/playersApi';
 import { SortOrderServices, ISortOrderParams } from 'services/sortOrderServices';
 import { NotificationServices } from 'services/notificationServices';
 import { IPlayer } from 'models/IPlayer';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
+import { PlayersApi } from 'services/hawksnestgolfApi/playersApi';
 
 @autoinject()
 export class PlayersList extends ItemsList {
@@ -33,7 +33,7 @@ export class PlayersList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Player", tooltipPlacement: "bottom", onClick: () => this.newItem("playerAdd"), glyph: "fas fa-plus" },
+        { tooltipTitle: "New Player", tooltipPlacement: "bottom", onClick: () => this.newItem("playerAdd"), glyph: "fas fa-plus", label: "Add Player" },
       ];
 
     this.columns =
@@ -48,14 +48,13 @@ export class PlayersList extends ItemsList {
 
     this.actions =
       [
-        // { action: (item) => this.editItem(item, "playerEdit"), class: "actionButton", tooltip: "Edit Item", glyph: "glyphicon glyphicon-edit"},
-        // { action: (item) => this.deleteItem(item), class: "actionButton delete", tooltip: "Delete Item", glyph: "glyphicon glyphicon-trash" },
+        { action: (item: IPlayer) => this.editItem(item, "playerEdit"), className: "actionButton", tooltip: "Edit Item", glyph: "fas fa-edit"},
+        { action: (item: IPlayer) => this.deleteItem(item, "playerDelete"), className: "actionButton delete", tooltip: "Delete Item", glyph: "fas fa-trash" },
       ];
   }
 
   fetchData = async (params: IQueryParams): Promise<IPlayer[] | ApiError> => {
     return this.api.get(params);
   }
-
 
 }

@@ -1,0 +1,44 @@
+<template>
+  <div class="container">
+    <div class="panel panel-default">
+
+      <div class="panel-heading">
+        <div class="panel-title">
+          <h3>${formTitle}</h3>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="playerName">Name</label>
+            <input id="playerName" type="text" placeholder="Name" class="form-control" value.bind="player.name" readonly.bind="formReadOnly" />
+          </div>
+
+          <div class="form-group">
+            <label for="userName">User Name1</label>
+            <input id="userName" type="text" placeholder="User Name" class="form-control" value.bind="player.userName" readonly.bind="formReadOnly" />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="text" placeholder="Email address" value.bind="player.email" class="form-control" readonly.bind="formReadOnly" />
+          </div>
+
+          <div class="form-group">
+            <label for="email2">Email2</label>
+           <input id="email2" type="text" placeholder="Email2 address" value.bind="player.email2" class="form-control" readonly.bind="formReadOnly" />
+           </div>
+
+          <div class="form-group form-check">
+            <input id="isAdmin" type="checkbox" checked.bind="player.isAdmin" readonly.bind="formReadOnly" />
+            <label for="isAdmin" class="form-check-label">Is Admin</label>
+          </div>
+
+          <input type="button" click.delegate="formOKOnClick()" class="btn btn-primary" value="${formOKLabel}" />
+          <input type="button" click.delegate="formCancelOnClick()" class="btn btn-primary" value="${formCancelLabel}" />
+        </form>
+
+    </div>
+  </div>
+</template>

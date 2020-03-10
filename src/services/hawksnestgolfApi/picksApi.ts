@@ -8,22 +8,28 @@ import { ApiError } from 'models/ApiError';
 @autoinject()
 export class PicksApi implements IHawksNestGolfApi {
   private resourceName: string = 'picks';
-  private api: ApiDataService;
 
-  constructor(api: ApiDataService) {
-    this.api = api;
+  constructor(private api: ApiDataService) {
   }
 
   public async get(params: IQueryParams = {}): Promise<IPick[] | ApiError> {
     return this.api.fetch<IPick>(this.resourceName, params);
   }
 
-  public async getById(id: string | number): Promise<IPick> {
-    return this.api.fetchById(this.resourceName, id);
+  public async getById(id: string | number): Promise<IPick | ApiError> {
+    return this.api.fetchById<IPick>(this.resourceName, id);
   }
 
   public async add(pick: IPick) {
     return this.api.post(this.resourceName, pick);
+  }
+  
+  public async update(pick: IPick): Promise<IPick | ApiError> {
+    return this.api.put<IPick>(this.resourceName, pick);
+  }
+
+  public async delete(id: string | number): Promise<boolean | ApiError> {
+    return this.api.delete(this.resourceName, id);
   }
 
 }

@@ -1,22 +1,22 @@
 import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
-import { IBet } from "../../models/IBet";
+import { ITournament } from "../../models/ITournament";
 import { NotificationServices } from "services/notificationServices";
 import { ApiError } from "models/ApiError";
-import { BetsApi } from "services/hawksnestgolfApi/betsApi";
+import { TournamentsApi } from "services/hawksnestgolfApi/tournamentsApi";
 
 @autoinject
-export class BetEdit {
+export class TournamentEdit {
 
-  public formTitle = "Edit Bet";
+  public formTitle = "Edit Tournament";
   formOKLabel = "Save";
   formCancelLabel = "Cancel";
   formOKOnClick = () => this.save();
   formCancelOnClick = () => this.cancel();
   formReadOnly = false;
-  public bet: IBet;
+  public tournament: ITournament;
 
-  constructor(private api: BetsApi, 
+  constructor(private api: TournamentsApi, 
               private router: Router,
               private notificationService: NotificationServices) {
   }
@@ -24,26 +24,26 @@ export class BetEdit {
   async activate(params) {
     const result = await this.api.getById(params.id);
     if(result instanceof ApiError) {
-      this.notificationService.error("Add Bets", `Error reading Bet: ${params.id}`);
+      this.notificationService.error("Add Tournaments", `Error reading Tournament: ${params.id}`);
     } else {
-      this.bet = result;
+      this.tournament = result;
     }
   }
 
   async save() {
-    const result = await this.api.update(this.bet);
+    const result = await this.api.update(this.tournament);
     if(result instanceof ApiError) {
       this.notificationService.error(result.status.toString(), result.message);
     } else {
-      this.notificationService.info("Edit Bet", "Saved");
+      this.notificationService.info("Edit Tournament", "Saved");
     }
-    this.router.navigateToRoute("betsList");
+    this.router.navigateToRoute("tournamentsList");
 
   }
 
   cancel() {
-    this.notificationService.info("Edit Bet", "Canceled")
-    this.router.navigateToRoute("betsList");
+    this.notificationService.info("Edit Tournament", "Canceled")
+    this.router.navigateToRoute("tournamentsList");
 
   }
 

@@ -1,29 +1,9 @@
-import { autoinject } from 'aurelia-framework';
 import {ITournament} from '../../models/ITournament';
-import { ApiDataService } from "./apiDataService";
-import { IHawksNestGolfApi } from './IHawksNestGolfApi';
-import { IQueryParams } from 'services/queryParamsService';
-import { ApiError } from 'models/ApiError';
+import { ResourceApi } from './hawksnestgolfApi';
 
-@autoinject()
-export class TournamentsApi implements IHawksNestGolfApi {
-  private resourceName: string = 'tournaments';
-  private api: ApiDataService;
+export class TournamentsApi extends ResourceApi<ITournament> {
 
-  constructor(api: ApiDataService) {
-    this.api = api;
+  constructor() {
+    super('tournaments');
   }
-
-  public async get(params: IQueryParams = {}): Promise<ITournament[] | ApiError> {
-    return this.api.fetch<ITournament>(this.resourceName, params);
-  }
-
-  public async getById(id: string | number): Promise<ITournament> {
-    return this.api.fetchById(this.resourceName, id);
-  }
-
-  public async add(tournament: ITournament) {
-    return this.api.post(this.resourceName, tournament);
-  }
-
 }

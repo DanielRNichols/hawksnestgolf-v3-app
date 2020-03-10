@@ -36,21 +36,21 @@ export class TournamentsList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Tournament", tooltipPlacement: "bottom", onClick: () => this.newItem("tournamentAdd"), glyph: "fas fa-plus" },
+        { tooltipTitle: "New Tournament", tooltipPlacement: "bottom", onClick: () => this.newItem("tournamentAdd"), glyph: "fas fa-plus", label: "Add Tournament" },
       ];
 
     this.columns =
       [
         { value: (tournament: ITournament) => tournament.id, propertyName: "id", header: "Id", className: "sortable", sortable: true, defaultSortOrder: '+', alignment: "text-center" },
         { value: (tournament: ITournament) => tournament.name, propertyName: "name", header: "Name", className: "sortable", sortable: true, defaultSortOrder: '+' },
-        { value: (tournament: ITournament) => tournament.url, propertyName: "leaderboardUrl", header: "Url", className: "sortable", sortable: true, defaultSortOrder: '+' },
+        // { value: (tournament: ITournament) => tournament.url, propertyName: "leaderboardUrl", header: "Url", className: "sortable", sortable: true, defaultSortOrder: '+' },
         { value: (tournament: ITournament) => tournament.isOfficial, propertyName: "isOfficial", header: "Official", className: "sortable", sortable: true, defaultSortOrder: '+' },
       ];
 
     this.actions =
       [
-        // { action: (tournament) => this.editItem(tournament, "tournamentEdit"), class: "actionButton", tooltip: "Edit Tournament", glyph: "glyphicon glyphicon-edit"},
-        // { action: (tournament) => this.deleteItem(tournament), class: "actionButton delete", tooltip: "Delete Tournament", glyph: "glyphicon glyphicon-trash" },
+        { action: (tournament:ITournament) => this.editItem(tournament, "tournamentEdit"), className: "actionButton", tooltip: "Edit Tournament", glyph: "fas fa-edit"},
+        { action: (tournament:ITournament) => this.deleteItem(tournament, "tournamentDelete"), className: "actionButton delete", tooltip: "Delete Tournament", glyph: "fas fa-trash" },
       ];
   }
 

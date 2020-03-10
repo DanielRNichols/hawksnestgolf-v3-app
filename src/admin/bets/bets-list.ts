@@ -2,14 +2,12 @@ import { autoinject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Router } from "aurelia-router";
 import { ItemsList, IToolbarParams, IItemsListParams, IColumnParams, IActionParams } from '../../services/itemsListService';
-import { BetsApi } from '../../services/hawksnestgolfApi/betsApi';
 import { SortOrderServices, ISortOrderParams } from 'services/sortOrderServices';
 import { NotificationServices } from 'services/notificationServices';
 import { IBet } from 'models/IBet';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
-
-
+import { BetsApi } from 'services/hawksnestgolfApi/betsApi';
 
 @autoinject()
 export class BetsList extends ItemsList {
@@ -19,7 +17,7 @@ export class BetsList extends ItemsList {
   columns: IColumnParams[];
   actions: IActionParams[];
 
-  // The parent class ItemsList requires Router, NotificationServices and EventAggregator
+  // The parent class ItemsList requires Router, NotificationServices, EventAggregator, DialogService
   constructor(private api: BetsApi,
               private sortOrderServices: SortOrderServices,
               router: Router,
@@ -40,7 +38,7 @@ export class BetsList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Bet", tooltipPlacement: "bottom", onClick: () => this.newItem("betAdd"), glyph: "fas fa-plus" },
+        { tooltipTitle: "New Bet", tooltipPlacement: "bottom", onClick: () => this.newItem("betAdd"), glyph: "fas fa-plus", label: "Add Bet" },
       ];
 
     this.columns =
@@ -52,8 +50,8 @@ export class BetsList extends ItemsList {
 
     this.actions =
       [
-        { action: (bet) => this.editItem(bet, "betEdit"), className: "actionButton", tooltip: "Edit Bet", glyph: "fas fa-edit"},
-        { action: (bet) => this.deleteItem(bet), className: "actionButton delete", tooltip: "Delete Bet", glyph: "fas fa-trash" },
+        { action: (bet: IBet) => this.editItem(bet, "betEdit"), className: "actionButton", tooltip: "Edit Bet", glyph: "fas fa-edit"},
+        { action: (bet: IBet) => this.deleteItem(bet, "betDelete"), className: "actionButton delete", tooltip: "Delete Bet", glyph: "fas fa-trash" },
       ];
   }
 

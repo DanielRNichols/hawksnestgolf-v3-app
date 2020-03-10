@@ -18,8 +18,8 @@ export class FieldApi implements IHawksNestGolfApi {
     return this.api.fetch<IGolfer>(this.resourceName, params);
   }
 
-  public async getById(id: string | number): Promise<IGolfer> {
-    return this.api.fetchById(this.resourceName, id);
+  public async getById(id: string | number): Promise<IGolfer | ApiError> {
+    return this.api.fetchById<IGolfer>(this.resourceName, id);
   }
 
   public async add(bet: IGolfer) {

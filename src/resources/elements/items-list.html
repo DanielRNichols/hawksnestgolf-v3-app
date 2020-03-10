@@ -8,21 +8,16 @@
         <span class="listHeader">${listParams.listHeader}</span>
       </div>
       <div class="col-sm">
-        
-      </div>
+        <form class="form-inline">
+          <label class="control-label" style="margin-right:5px">${listParams.filterParams.filterOnLabel}</label>
+            <input class="form-control" type="text" placeholder="Filter"
+                    value.bind="listParams.filterString  & debounce:850" input.trigger="filterChanged($event.target.value)"/>
+        </form>
+        </div>
       <div class="col-sm">
         <toolbar class="toolbar" toolbar.bind="toolbar"></toolbar>
       </div>
      </div>
-
-
-    <div if.bind="listParams.filterParams.filterOn">
-      <form class="form-inline pull-right">
-        <label class="control-label" style="margin-right:5px">${listParams.filterParams.filterOnLabel}</label>
-          <input class="form-control" type="text" placeholder="Filter"
-                  value.bind="listParams.filterString  & debounce:850" input.trigger="filterChanged($event.target.value)"/>
-      </form>
-    </div>
 
 
       <table class="table table-striped">

@@ -18,8 +18,8 @@ export class SelectionPicksApi implements IHawksNestGolfApi {
     return this.api.fetch<ISelectionPick>(this.resourceName, params);
   }
 
-  public async getById(id: string | number): Promise<ISelectionPick> {
-    return this.api.fetchById(this.resourceName, id);
+  public async getById(id: string | number): Promise<ISelectionPick | ApiError> {
+    return this.api.fetchById<ISelectionPick>(this.resourceName, id);
   }
 
   public async add(selectionPick: ISelectionPick) {

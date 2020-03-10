@@ -9,4 +9,19 @@ import { IFieldEntry } from "./IFieldEntry";
 import { ISelectionEntry } from "./ISelectionEntry";
 import { ISelectionPick } from "./ISelectionPick";
 
-export type IItem = IGolfer | IBet | IPlayer | ITournament | IEvent | IEntry| IPick | IFieldEntry | ISelectionEntry | ISelectionPick;
+export type IItem = 
+  IGolfer | 
+  IBet | 
+  IPlayer | 
+  ITournament | 
+  IEvent | 
+  IEntry| 
+  IPick | 
+  IFieldEntry | 
+  ISelectionEntry | 
+  ISelectionPick;
+
+  export interface IDbItem {
+    itemType: IItem;
+    resourceName: string;
+  }

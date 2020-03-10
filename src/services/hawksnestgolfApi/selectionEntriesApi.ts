@@ -18,8 +18,8 @@ export class SelectionEntriesApi implements IHawksNestGolfApi {
     return this.api.fetch<ISelectionEntry>(this.resourceName, params);
   }
 
-  public async getById(id: string | number): Promise<ISelectionEntry> {
-    return this.api.fetchById(this.resourceName, id);
+  public async getById(id: string | number): Promise<ISelectionEntry | ApiError> {
+    return this.api.fetchById<ISelectionEntry>(this.resourceName, id);
   }
 
   public async add(selectionEntry: ISelectionEntry) {

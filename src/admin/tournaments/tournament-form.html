@@ -1,0 +1,38 @@
+<template>
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <h3>${formTitle}</h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form>
+          <div class="form-group">
+            <label for="tournamentName">Name</label>
+            <input id="tournamentName" type="text" placeholder="Name" class="form-control" value.bind="tournament.name"
+              readonly.bind="formReadOnly" />
+          </div>
+
+          <!-- <div class="form-group">
+            <label for="tournamentUrl">url</label>
+            <input id="tournamentUrl" type="text" placeholder="url" class="form-control"
+              value.bind="tournament.url" readonly.bind="formReadOnly" />
+          </div> -->
+
+          <div class="form-group form-check">
+            <input id="isOfficial" type="checkbox" checked.bind="tournament.isOfficial" readonly.bind="formReadOnly" />
+            <label for="isOfficial" class="form-check-label">Is Official</label>
+          </div>
+
+
+          <input type="button" click.delegate="formOKOnClick()" class="btn btn-primary" value="${formOKLabel}" />
+          <input type="button" click.delegate="formCancelOnClick()" class="btn btn-primary"
+            value="${formCancelLabel}" />
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</template>

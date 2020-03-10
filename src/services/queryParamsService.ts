@@ -22,6 +22,7 @@ export class QueryParamsService {
         return queryString;
 
     if (params.filter) {
+        console.log(`filter=${params.filter}`);
         queryString += `${!queryString ? "?" : "&"}filter=${params.filter}`;
     }
 

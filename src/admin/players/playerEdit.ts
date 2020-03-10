@@ -1,22 +1,22 @@
 import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
-import { IBet } from "../../models/IBet";
+import { IPlayer } from "../../models/IPlayer";
 import { NotificationServices } from "services/notificationServices";
 import { ApiError } from "models/ApiError";
-import { BetsApi } from "services/hawksnestgolfApi/betsApi";
+import { PlayersApi } from "services/hawksnestgolfApi/playersApi";
 
 @autoinject
-export class BetEdit {
+export class PlayerEdit {
 
-  public formTitle = "Edit Bet";
+  public formTitle = "Edit Player";
   formOKLabel = "Save";
   formCancelLabel = "Cancel";
   formOKOnClick = () => this.save();
   formCancelOnClick = () => this.cancel();
   formReadOnly = false;
-  public bet: IBet;
+  public player: IPlayer;
 
-  constructor(private api: BetsApi, 
+  constructor(private api: PlayersApi, 
               private router: Router,
               private notificationService: NotificationServices) {
   }
@@ -24,26 +24,26 @@ export class BetEdit {
   async activate(params) {
     const result = await this.api.getById(params.id);
     if(result instanceof ApiError) {
-      this.notificationService.error("Add Bets", `Error reading Bet: ${params.id}`);
+      this.notificationService.error("Add Players", `Error reading Player: ${params.id}`);
     } else {
-      this.bet = result;
+      this.player = result;
     }
   }
 
   async save() {
-    const result = await this.api.update(this.bet);
+    const result = await this.api.update(this.player);
     if(result instanceof ApiError) {
       this.notificationService.error(result.status.toString(), result.message);
     } else {
-      this.notificationService.info("Edit Bet", "Saved");
+      this.notificationService.info("Edit Player", "Saved");
     }
-    this.router.navigateToRoute("betsList");
+    this.router.navigateToRoute("playersList");
 
   }
 
   cancel() {
-    this.notificationService.info("Edit Bet", "Canceled")
-    this.router.navigateToRoute("betsList");
+    this.notificationService.info("Edit Player", "Canceled")
+    this.router.navigateToRoute("playersList");
 
   }
 

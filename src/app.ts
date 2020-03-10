@@ -30,7 +30,7 @@ export class App {
        config.map([
             {
                 route: ["", "home"],
-                moduleId: PLATFORM.moduleName("components/home/home"),
+                moduleId: "components/home/home",
                 title: "Home",
                 name: "home",
                 nav: true
@@ -51,7 +51,7 @@ export class App {
           //   },
             {
                 route: ["admin/events"],
-                moduleId: PLATFORM.moduleName("admin/events/events-list"),
+                moduleId: "admin/events/events-list",
                 title: "Events",
                 name: "eventsList",
                 nav: true
@@ -77,107 +77,64 @@ export class App {
           //       name: "eventAdd",
           //       nav: false
           //   },
-           {
-                route: ["admin/bets"],
-                moduleId: PLATFORM.moduleName("admin/bets/bets-list"),
-                title: "Bets",
-                name: "betsList",
-                nav: true
-            },
-            {
-                route: ["admin/betEdit"],
-                moduleId: "admin/bets/betEdit",
-                title: "Edit Bet",
-                name: "betEdit",
-                nav: false
-            },
-            {
-                route: ["admin/betAdd"],
-                moduleId: "admin/bets/betAdd",
-                title: "Add Bet",
-                name: "betAdd",
-                nav: false
-            },
-            {
-                route: ["admin/players"],
-                moduleId: PLATFORM.moduleName("admin/players/players-list"),
-                title: "Players",
-                name: "playersList",
-                nav: true
-            },
-          //   {
-          //       route: ["admin/playerEdit"],
-          //       moduleId: "admin/players/playerEdit",
-          //       title: "Edit Player",
-          //       name: "playerEdit",
-          //       nav: false
-          //   },
-          //   {
-          //       route: ["admin/playerAdd"],
-          //       moduleId: "admin/players/playerAdd",
-          //       title: "Add Player",
-          //       name: "playerAdd",
-          //       nav: false
-          //   },
-            {
-                route: ["admin/tournaments"],
-                moduleId: PLATFORM.moduleName("admin/tournaments/tournaments-list"),
-                title: "Tournaments",
-                name: "tournamentsList",
-                nav: true
-            },
-          //   {
-          //       route: ["admin/tournamentEdit"],
-          //       moduleId: "admin/tournaments/tournamentEdit",
-          //       title: "Edit Tournament",
-          //       name: "tournamentEdit",
-          //       nav: false
-          //   },
-          //   {
-          //       route: ["admin/tournamentAdd"],
-          //       moduleId: "admin/tournaments/tournamentAdd",
-          //       title: "Add Tournament",
-          //       name: "tournamentAdd",
-          //       nav: false
-          //   },
-            {
+
+          // bets
+          {route: ["admin/bets"],      moduleId: "admin/bets/bets-list", title: "Bets",       name: "betsList",  nav: true},
+          {route: ["admin/betEdit"],   moduleId: "admin/bets/betEdit",   title: "Edit Bet",   name: "betEdit",   nav: false},
+          {route: ["admin/betAdd"],    moduleId: "admin/bets/betAdd",    title: "Add Bet",    name: "betAdd",    nav: false},
+          {route: ["admin/betDelete"], moduleId: "admin/bets/betDelete", title: "Delete Bet", name: "betDelete", nav: false},
+
+          //players
+          {route: ["admin/players"],      moduleId: "admin/players/players-list", title: "Players",       name: "playersList",  nav: true},
+          {route: ["admin/playerEdit"],   moduleId: "admin/players/playerEdit",   title: "Edit Player",   name: "playerEdit",   nav: false},
+          {route: ["admin/playerAdd"],    moduleId: "admin/players/playerAdd",    title: "Add Player",    name: "playerAdd",    nav: false},
+          {route: ["admin/playerDelete"], moduleId: "admin/players/playerDelete", title: "Delete Player", name: "playerDelete", nav: false},
+
+          // tournaments
+          {route: ["admin/tournaments"],      moduleId: "admin/tournaments/tournaments-list", title: "Tournaments",       name: "tournamentsList",  nav: true},
+          {route: ["admin/tournamentEdit"],   moduleId: "admin/tournaments/tournamentEdit",   title: "Edit Tournament",   name: "tournamentEdit",   nav: false},
+          {route: ["admin/tournamentAdd"],    moduleId: "admin/tournaments/tournamentAdd",    title: "Add Tournament",    name: "tournamentAdd",    nav: false},
+          {route: ["admin/tournamentDelete"], moduleId: "admin/tournaments/tournamentDelete", title: "Delete Tournament", name: "tournamentDelete", nav: false},
+
+
+          {
                 route: ["admin/entries"],
-                moduleId: PLATFORM.moduleName("admin/entries/entries-list"),
+                moduleId: "admin/entries/entries-list",
                 title: "Entries",
                 name: "entries",
                 nav: true
             },
             {
                 route: ["admin/picks"],
-                moduleId: PLATFORM.moduleName("admin/picks/picks-list"),
+                moduleId: "admin/picks/picks-list",
                 title: "Picks",
                 name: "picks",
                 nav: true
             },
             {
                 route: ["admin/golfers"],
-                moduleId: PLATFORM.moduleName("admin/golfers/golfers-list"),
+                moduleId: "admin/golfers/golfers-list",
                 title: "Golfers",
                 name: "golfersList",
                 nav: true
             },
             {
                 route: ["admin/field"],
-                moduleId: PLATFORM.moduleName("admin/field/field-list"),
+                moduleId: "admin/field/field-list",
                 title: "Field",
                 name: "field",
                 nav: true
             },
             {
                 route: ["admin/selectionEntries"],
-                moduleId: PLATFORM.moduleName("admin/selectionEntries/selection-entries-list"),
+                moduleId: "admin/selectionEntries/selection-entries-list",
                 title: "SelectionEntries",
                 name: "selectionEntries",
                 nav: true
             },
             {
                 route: ["admin/selectionPicks"],
-                moduleId: PLATFORM.moduleName("admin/selectionPicks/selection-picks-list"),
+                moduleId: "admin/selectionPicks/selection-picks-list",
                 title: "SelectionPicks",
                 name: "selectionPicks",
                 nav: true
