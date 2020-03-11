@@ -68,21 +68,21 @@ export class FieldList extends ItemsList {
     console.log("Delete the field");
 
 
-    const verified = await this.promptDialogServices.YesNo(`Delete the Field?`);
-    if(verified) {
-      const result = await this.api.deleteAll();
-      console.log(`Deleted: ${result}`);
-      if(result instanceof ApiError) {
-        this.notificationService.error(title, `Error deleting the Field</br>${result.status.toString()}:  ${result.message}`);
+    // const verified = await this.promptDialogServices.YesNo(`Delete the Field?`);
+    // if(verified) {
+    //   const result = await this.api.deleteAll();
+    //   console.log(`Deleted: ${result}`);
+    //   if(result instanceof ApiError) {
+    //     this.notificationService.error(title, `Error deleting the Field</br>${result.status.toString()}:  ${result.message}`);
 
-      } else {
-        this.notificationService.info(title, `Deleted the Field`);
+    //   } else {
+    //     this.notificationService.info(title, `Deleted the Field`);
 
-      }
-    } else {
-      this.notificationService.info(title, "Canceled");
+    //   }
+    // } else {
+    //   this.notificationService.info(title, "Canceled");
 
-    }
+    // }
 
   }
 
