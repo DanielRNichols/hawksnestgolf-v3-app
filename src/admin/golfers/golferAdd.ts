@@ -1,29 +1,28 @@
 import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
-import { ITournament } from "../../models/ITournament";
+import { IGolfer } from "../../models/IGolfer";
 import { NotificationServices } from "services/notificationServices";
-import { ApiError } from "models/ApiError";
-import { TournamentsApi } from "services/hawksnestgolfApi/tournamentsApi";
+import { GolfersApi } from "services/hawksnestgolfApi/golfersApi";
 import { BaseResourceUtilities } from "admin/baseResource/baseResourceUtilities";
 
 @autoinject
-export class TournamentAdd {
-  formTitle = "New Tournament";
+export class GolferAdd {
+  formTitle = "Add Golfer";
   formOKLabel = "Save";
   formCancelLabel = "Cancel";
-  formOKOnClick = () => this.update();
+  formOKOnClick = () => this.add();
   formCancelOnClick = () => this.cancel();
   formReadOnly = false;
-  tournament: ITournament = { id: 0, name: "", url: "", isOfficial: false, ordinal: 0 };
-  private returnRoute = "tournamentsList";
+  golfer: IGolfer = { id: 0, pgaTourId: "", name: "", country: "", selectionName: "", worldRanking: 0, fedExRanking: 0, image: "" };
+  private returnRoute = "golfersList";
 
-  constructor(private api: TournamentsApi,
+  constructor(private api: GolfersApi,
               private router: Router,
               private notificationService: NotificationServices) {
   }
 
-  async update() {
-    await BaseResourceUtilities.saveItem(this.api, this.tournament, this.returnRoute, this.tournament.name, this.formTitle)
+  async add() {
+    await BaseResourceUtilities.saveItem(this.api, this.golfer, this.returnRoute, this.golfer.name, this.formTitle)
   }
 
   cancel() {

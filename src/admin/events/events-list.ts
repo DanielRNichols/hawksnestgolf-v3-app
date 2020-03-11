@@ -36,7 +36,7 @@ export class EventsList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Event", tooltipPlacement: "bottom", onClick: () => this.newItem("eventAdd"), glyph: "fas fa-plus" },
+        { tooltipTitle: "New Event", tooltipPlacement: "bottom", onClick: () => this.newItem("eventAdd"), glyph: "fas fa-plus", label: "Add Event" },
        ];
 
     this.columns =
@@ -50,8 +50,8 @@ export class EventsList extends ItemsList {
 
     this.actions =
       [
-        // { action: (event) => this.editItem(event, "eventEdit"), class: "actionButton", tooltip: "Edit Event", glyph: "glyphicon glyphicon-edit"},
-        // { action: (event) => this.deleteItem(event), class: "actionButton delete", tooltip: "Delete Event", glyph: "glyphicon glyphicon-trash" },
+        { action: (event) => this.editItem(event, "eventEdit"), className: "actionButton", tooltip: "Edit Event", glyph: "fas fa-edit"},
+        { action: (event) => this.deleteItem(event, "eventDelete"), className: "actionButton delete", tooltip: "Delete Event", glyph: "fas fa-trash" },
       ];
   }
 

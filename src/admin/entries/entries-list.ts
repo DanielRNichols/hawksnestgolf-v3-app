@@ -50,8 +50,8 @@ export class EntriesList extends ItemsList {
 
     this.actions =
       [
-        // { action: (entry) => this.editItem(entry, "entryEdit"), class: "actionButton", tooltip: "Edit Entry", glyph: "glyphicon glyphicon-edit"},
-        // { action: (entry) => this.deleteItem(entry), class: "actionButton delete", tooltip: "Delete Entry", glyph: "glyphicon glyphicon-trash" },
+        // { action: (entry) => this.editItem(entry, "entryEdit"), class: "actionButton", tooltip: "Edit Entry", glyph: "fas fa-edit"},
+        // { action: (entry) => this.deleteItem(entry), class: "actionButton delete", tooltip: "Delete Entry", glyph: "fas fa-trash" },
       ];
   }
 

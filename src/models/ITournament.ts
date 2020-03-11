@@ -3,4 +3,5 @@ export interface ITournament {
   name: string;
   url: string;
   isOfficial: boolean;
+  ordinal: number;
 }

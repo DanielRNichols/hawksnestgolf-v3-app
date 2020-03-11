@@ -6,7 +6,7 @@ import { ApiError } from 'models/ApiError';
 import { IItem } from 'models/IItem';
 
 export class ResourceApi<T extends IItem> implements IHawksNestGolfApi {
-  private api: ApiDataService;
+  protected api: ApiDataService;
   private resourceName: string;
 
   constructor(resourceName: string) {

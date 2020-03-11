@@ -53,8 +53,8 @@ export class PicksList extends ItemsList {
 
     this.actions =
       [
-        // { action: (pick) => this.editItem(pick, "pickEdit"), class: "actionButton", tooltip: "Edit Pick", glyph: "glyphicon glyphicon-edit"},
-        // { action: (pick) => this.deleteItem(pick), class: "actionButton delete", tooltip: "Delete Pick", glyph: "glyphicon glyphicon-trash" },
+        // { action: (pick) => this.editItem(pick, "pickEdit"), class: "actionButton", tooltip: "Edit Pick", glyph: "fas fa-edit"},
+        // { action: (pick) => this.deleteItem(pick), class: "actionButton delete", tooltip: "Delete Pick", glyph: "fas fa-trash" },
       ];
   }
 

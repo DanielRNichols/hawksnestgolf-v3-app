@@ -1,40 +1,40 @@
 import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
-import { IBet } from "../../models/IBet";
+import { IGolfer } from "../../models/IGolfer";
 import { NotificationServices } from "services/notificationServices";
 import { ApiError } from "models/ApiError";
-import { BetsApi } from "services/hawksnestgolfApi/betsApi";
+import { GolfersApi } from "services/hawksnestgolfApi/golfersApi";
 import { BaseResourceUtilities } from "admin/baseResource/baseResourceUtilities";
 
 @autoinject
-export class BetDelete {
+export class GolferDelete {
 
-  formTitle = "Delete Bet";
+  formTitle = "Delete Golfer";
   formOKLabel = "Delete";
   formCancelLabel = "Cancel";
   formOKOnClick = () => this.delete();
   formCancelOnClick = () => this.cancel();
   formReadOnly = true;
-  bet: IBet;
-  private returnRoute = "betsList";
+  golfer: IGolfer;
+  private returnRoute = "golfersList";
 
-  constructor(private api: BetsApi,
+  constructor(private api: GolfersApi,
               private notificationService: NotificationServices,
               private router: Router) {
 
   }
 
-  async activate(bet: IBet) {
-    const result = await this.api.getById(bet.id);
+  async activate(golfer: IGolfer) {
+    const result = await this.api.getById(golfer.id);
     if(result instanceof ApiError) {
-      this.notificationService.error(this.formTitle, `Error reading Bet: ${bet.id}`);
+      this.notificationService.error(this.formTitle, `Error reading Golfer: ${golfer.id}`);
     } else {
-      this.bet = result;
+      this.golfer = result;
     }
 }
 
   async delete() {
-    await BaseResourceUtilities.deleteItem(this.api, this.bet, this.returnRoute, this.bet.name, this.formTitle);
+    await BaseResourceUtilities.deleteItem(this.api, this.golfer, this.returnRoute, this.golfer.name, this.formTitle);
   }
 
   cancel() {

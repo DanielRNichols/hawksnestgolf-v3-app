@@ -2,8 +2,8 @@ import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { IPlayer } from "../../models/IPlayer";
 import { NotificationServices } from "services/notificationServices";
-import { ApiError } from "models/ApiError";
 import { PlayersApi } from "services/hawksnestgolfApi/playersApi";
+import { BaseResourceUtilities } from "admin/baseResource/baseResourceUtilities";
 
 @autoinject
 export class PlayerAdd {
@@ -11,10 +11,11 @@ export class PlayerAdd {
   formTitle = "New Player";
   formOKLabel = "Save";
   formCancelLabel = "Cancel";
-  formOKOnClick = () => this.save();
+  formOKOnClick = () => this.update();
   formCancelOnClick = () => this.cancel();
   formReadOnly = false;
   player: IPlayer = { id: 0, name: "", userName: "", email: "", email2: "", isAdmin: false };
+  private returnRoute = "playersList";
 
   constructor(private api: PlayersApi,
               private router: Router,
@@ -22,19 +23,13 @@ export class PlayerAdd {
 
   }
 
-  async save() {
-    const result = await this.api.add(this.player)
-    if(result instanceof ApiError) {
-      this.notificationService.error("Add Players", `Error adding ${this.player.name}`);
-    } else {
-      this.notificationService.info("Add Players", `${this.player.name} was added`);
-    }
-    this.router.navigateToRoute("playersList");
+  async update() {
+    await BaseResourceUtilities.saveItem(this.api, this.player, this.returnRoute, this.player.name, this.formTitle)
   }
 
   cancel() {
-    this.notificationService.info("Add Players", "Canceled");
-    this.router.navigateToRoute("playersList");
+    this.notificationService.info(this.formTitle, "Canceled");
+    this.router.navigateToRoute(this.returnRoute);
   }
 
 

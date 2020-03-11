@@ -1,42 +1,37 @@
 <template>
   <div class="container">
-    <div class="panel panel-default">
+    <div class="card">
 
-      <div class="panel-heading">
-        <div class="panel-title">
-          <h3>${formTitle}</h3>
-        </div>
-      </div>
-
-      <div class="panel-body">
+      <div class="card-body">
+        <h5 class="card-title">${formTitle}</h5>
         <form>
-          <div class="form-group">
-            <label for="playerName">Name</label>
-            <input id="playerName" type="text" placeholder="Name" class="form-control" value.bind="player.name" readonly.bind="formReadOnly" />
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="playerName">Name</label>
+            <input id="playerName" type="text" placeholder="Name" class="col-sm-10 form-control" value.bind="player.name" readonly.bind="formReadOnly" />
           </div>
 
-          <div class="form-group">
-            <label for="userName">User Name1</label>
-            <input id="userName" type="text" placeholder="User Name" class="form-control" value.bind="player.userName" readonly.bind="formReadOnly" />
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="userName">User Name1</label>
+            <input id="userName" type="text" placeholder="User Name" class="col-sm-10 form-control" value.bind="player.userName" readonly.bind="formReadOnly" />
           </div>
 
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" type="text" placeholder="Email address" value.bind="player.email" class="form-control" readonly.bind="formReadOnly" />
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="email">Email</label>
+            <input id="email" type="text" placeholder="Email address" value.bind="player.email" class="col-sm-10 form-control" readonly.bind="formReadOnly" />
           </div>
 
-          <div class="form-group">
-            <label for="email2">Email2</label>
-           <input id="email2" type="text" placeholder="Email2 address" value.bind="player.email2" class="form-control" readonly.bind="formReadOnly" />
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="email2">Email2</label>
+           <input id="email2" type="text" placeholder="Email2 address" value.bind="player.email2" class="col-sm-10 form-control" readonly.bind="formReadOnly" />
            </div>
 
-          <div class="form-group form-check">
-            <input id="isAdmin" type="checkbox" checked.bind="player.isAdmin" readonly.bind="formReadOnly" />
+          <div class="form-group form-check row">
+            <input class="offset-sm-2" id="isAdmin" type="checkbox" checked.bind="player.isAdmin" readonly.bind="formReadOnly" />
             <label for="isAdmin" class="form-check-label">Is Admin</label>
           </div>
 
-          <input type="button" click.delegate="formOKOnClick()" class="btn btn-primary" value="${formOKLabel}" />
-          <input type="button" click.delegate="formCancelOnClick()" class="btn btn-primary" value="${formCancelLabel}" />
+          <input class="btn btn-primary offset-sm-2" type="button" click.delegate="formOKOnClick()"      value="${formOKLabel}" />
+          <input class="btn btn-primary"             type="button" click.delegate="formCancelOnClick()"  value="${formCancelLabel}" />
         </form>
 
     </div>

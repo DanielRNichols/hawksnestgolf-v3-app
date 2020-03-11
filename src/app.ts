@@ -49,35 +49,6 @@ export class App {
           //       name: "live",
           //       nav: true
           //   },
-            {
-                route: ["admin/events"],
-                moduleId: "admin/events/events-list",
-                title: "Events",
-                name: "eventsList",
-                nav: true
-            },
-          //   {
-          //       route: ["admin/eventEdit"],
-          //       moduleId: "admin/events/eventEdit",
-          //       title: "Edit Event",
-          //       name: "eventEdit",
-          //       nav: false
-          //   },
-          //   {
-          //       route: ["admin/eventResults"],
-          //       moduleId: "admin/eventResults/eventResults",
-          //       title: "Event Results",
-          //       name: "eventResults",
-          //       nav: false
-          //   },
-          //   {
-          //       route: ["admin/eventAdd"],
-          //       moduleId: "admin/events/eventAdd",
-          //       title: "Add Event",
-          //       name: "eventAdd",
-          //       nav: false
-          //   },
-
           // bets
           {route: ["admin/bets"],      moduleId: "admin/bets/bets-list", title: "Bets",       name: "betsList",  nav: true},
           {route: ["admin/betEdit"],   moduleId: "admin/bets/betEdit",   title: "Edit Bet",   name: "betEdit",   nav: false},
@@ -96,6 +67,17 @@ export class App {
           {route: ["admin/tournamentAdd"],    moduleId: "admin/tournaments/tournamentAdd",    title: "Add Tournament",    name: "tournamentAdd",    nav: false},
           {route: ["admin/tournamentDelete"], moduleId: "admin/tournaments/tournamentDelete", title: "Delete Tournament", name: "tournamentDelete", nav: false},
 
+          // events
+          {route: ["admin/events"],      moduleId: "admin/events/events-list", title: "Events",       name: "eventsList",  nav: true},
+          {route: ["admin/eventEdit"],   moduleId: "admin/events/eventEdit",   title: "Edit Event",   name: "eventEdit",   nav: false},
+          {route: ["admin/eventAdd"],    moduleId: "admin/events/eventAdd",    title: "Add Event",    name: "eventAdd",    nav: false},
+          {route: ["admin/eventDelete"], moduleId: "admin/events/eventDelete", title: "Delete Event", name: "eventDelete", nav: false},
+
+          // golfers
+          {route: ["admin/golfers"],      moduleId: "admin/golfers/golfers-list", title: "Golfers",       name: "golfersList",  nav: true},
+          {route: ["admin/golferEdit"],   moduleId: "admin/golfers/golferEdit",   title: "Edit Golfer",   name: "golferEdit",   nav: false},
+          {route: ["admin/golferAdd"],    moduleId: "admin/golfers/golferAdd",    title: "Add Golfer",    name: "golferAdd",    nav: false},
+          {route: ["admin/golferDelete"], moduleId: "admin/golfers/golferDelete", title: "Delete Golfer", name: "golferDelete", nav: false},
 
           {
                 route: ["admin/entries"],

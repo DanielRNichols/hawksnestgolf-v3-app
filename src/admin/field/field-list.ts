@@ -9,17 +9,19 @@ import { IGolfer } from 'models/IGolfer';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
 import { IFieldEntry } from 'models/IFieldEntry';
+import { PromptDialogServices } from 'services/promptDialogServices';
 
 @autoinject()
-export class GolfersList extends ItemsList {
+export class FieldList extends ItemsList {
 
   // The parent class ItemsList requires Router, NotificationServices and EventAggregator
   constructor(private api: FieldApi,
               private sortOrderServices: SortOrderServices,
+              private promptDialogServices: PromptDialogServices,
               router: Router,
-              notifications: NotificationServices,
+              notificationService: NotificationServices,
               eventAggregator: EventAggregator) {
-    super(router, notifications, eventAggregator);
+    super(router, notificationService, eventAggregator);
 
     this.itemDesc = "The Field";
 
@@ -35,14 +37,7 @@ export class GolfersList extends ItemsList {
 
     this.toolbar =
       [
-        //{ tooltipTitle: "New Golfer", tooltipPlacement: "bottom", callback: () => this.newItem("golferAdd"), glyph: "fas fa-plus" },
-        //{ tooltipTitle: "Update Rankings", tooltipPlacement: "bottom", callback: () => this.updateRankings(), glyph: "fas fa-sync" },
-        //    { tooltipTitle: "Settings", tooltipPlacement: "bottom", callback: () => this.settingsButton(), glyph: "glyphicon glyphicon-cog" },
-        //    { tooltipTitle: "Print", tooltipPlacement: "bottom", callback: () => this.printButton(), glyph: "glyphicon glyphicon-print" },
-        //    { tooltipTitle: "Archives", tooltipPlacement: "bottom", callback: () => this.archivesButton(), glyph: "glyphicon glyphicon-cd" },
-        //    { tooltipTitle: "Trash Bin", tooltipPlacement: "bottom", callback: () => this.trashBinButton(), glyph: "glyphicon glyphicon-oil" },
-        //    { tooltipTitle: "Help", tooltipPlacement: "bottom", callback: () => this.helpButton(), glyph: "glyphicon glyphicon-question-sign" },
-
+        { tooltipTitle: "Delete Field", tooltipPlacement: "bottom", onClick: () => this.deleteAll(), glyph: "fas fa-trash", label: "Delete All" },
       ];
 
     this.columns =
@@ -60,12 +55,35 @@ export class GolfersList extends ItemsList {
 
     this.actions =
       [
-        //{ action: (item) => this.editItem(item, "golferEdit"), className: "actionButton", tooltip: "Edit Item", glyph: "glyphicon glyphicon-edit"},
-        //{ action: (item) => this.deleteItem(item), className: "actionButton delete", tooltip: "Delete Item", glyph: "glyphicon glyphicon-trash" },
+        //{ action: (item) => this.editItem(item, "golferEdit"), className: "actionButton", tooltip: "Edit Item", glyph: "fas fa-edit"},
+        //{ action: (item) => this.deleteItem(item), className: "actionButton delete", tooltip: "Delete Item", glyph: "fas fa-trash" },
       ];
   }
 
-  fetchData = async (params: IQueryParams): Promise<IGolfer[] | ApiError> => {
+  fetchData = async (params: IQueryParams): Promise<IFieldEntry[] | ApiError> => {
     return this.api.get(params);
   }
+
+  async deleteAll() {
+    console.log("Delete the field");
+
+
+    const verified = await this.promptDialogServices.YesNo(`Delete the Field?`);
+    if(verified) {
+      const result = await this.api.deleteAll();
+      console.log(`Deleted: ${result}`);
+      if(result instanceof ApiError) {
+        this.notificationService.error(title, `Error deleting the Field</br>${result.status.toString()}:  ${result.message}`);
+
+      } else {
+        this.notificationService.info(title, `Deleted the Field`);
+
+      }
+    } else {
+      this.notificationService.info(title, "Canceled");
+
+    }
+
+  }
+
 }

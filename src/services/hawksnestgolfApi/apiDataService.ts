@@ -111,6 +111,24 @@ export class ApiDataService {
     }
   }
   
+  // patch currently just used for updating rankings, may need to expand this later
+  async patch(resourceName: string): Promise<boolean| ApiError> {
+    const url = resourceName;
+    console.log(url);
+    try {
+      const response = await this.httpClient.fetch(url, {method: 'PATCH'});
+      const data = await response.json();
+      if(response.ok) {
+         return true;
+      } else {
+        return new ApiError(response.status, data.message);
+      }
+    } catch (err) {
+      console.log(err.message);
+      return new ApiError(500, "Server error");
+    }
+  }
+  
   async delete(resourceName: string, id: string | number): Promise<boolean | ApiError> {
     const url = `${resourceName}/${id}`;
     console.log(url);

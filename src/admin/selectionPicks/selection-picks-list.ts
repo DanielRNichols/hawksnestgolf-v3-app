@@ -46,8 +46,8 @@ export class SelectionPicksList extends ItemsList {
 
     this.actions =
       [
-        // { action: (selectionPick) => this.editItem(selectionPick, "selectionPickEdit"), class: "actionButton", tooltip: "Edit SelectionPick", glyph: "glyphicon glyphicon-edit"},
-        // { action: (selectionPick) => this.deleteItem(selectionPick), class: "actionButton delete", tooltip: "Delete SelectionPick", glyph: "glyphicon glyphicon-trash" },
+        // { action: (selectionPick) => this.editItem(selectionPick, "selectionPickEdit"), class: "actionButton", tooltip: "Edit SelectionPick", glyph: "fas fa-edit"},
+        // { action: (selectionPick) => this.deleteItem(selectionPick), class: "actionButton delete", tooltip: "Delete SelectionPick", glyph: "fas fa-trash" },
       ];
   }
 

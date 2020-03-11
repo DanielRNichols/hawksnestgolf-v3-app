@@ -14,16 +14,37 @@ export class BaseResourceUtilities{
   private static notificationService: NotificationServices = Container.instance.get(NotificationServices); 
   private static promptDialogServices: PromptDialogServices = Container.instance.get(PromptDialogServices);
 
-  static async deleteItem(api: IHawksNestGolfApi, item: IItem, route: string, prompt: string, title: string = "") {
-    const verified = await this.promptDialogServices.YesNo(prompt);
+
+  static async saveItem(api: IHawksNestGolfApi, item: IItem, route: string, itemDesc: string, title: string = "") {
+    const result = await api.add(item)
+    if(result instanceof ApiError) {
+      this.notificationService.error(title, `Error adding ${itemDesc}</br>${result.status.toString()}:  ${result.message}`);
+    } else {
+     this. notificationService.info(title, `Added ${itemDesc}`);
+    }
+    this.router.navigateToRoute(route);
+  }
+
+  static async update(api: IHawksNestGolfApi, item: IItem, route: string, itemDesc: string, title: string = "") {
+    const result = await api.update(item);
+    if(result instanceof ApiError) {
+      this.notificationService.error(title, `Error updating ${itemDesc}</br>${result.status.toString()}:  ${result.message}`);
+    } else {
+      this.notificationService.info(title, `Updated ${itemDesc}`);
+    }
+    this.router.navigateToRoute(route);
+  }
+
+  static async deleteItem(api: IHawksNestGolfApi, item: IItem, route: string, itemDesc: string, title: string = "") {
+    const verified = await this.promptDialogServices.YesNo(`Delete ${itemDesc}?`);
     if(verified) {
       const result = await api.delete(item.id);
       console.log(`Deleted: ${result}`);
       if(result instanceof ApiError) {
-        this.notificationService.error(result.status.toString(), result.message);
+        this.notificationService.error(title, `Error deleting ${itemDesc}</br>${result.status.toString()}:  ${result.message}`);
         this.router.navigateToRoute(route);   
       } else {
-        this.notificationService.info(title, "Deleted");
+        this.notificationService.info(title, `Deleted ${itemDesc}`);
         this.router.navigateToRoute(route);
       }
     } else {

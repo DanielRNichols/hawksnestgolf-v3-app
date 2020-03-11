@@ -1,0 +1,47 @@
+<template>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">${formTitle}</h5>
+
+        <form>
+          <div class="form-group row">
+            <label for="eventNo" class="col-sm-2 col-form-label">Event #</label>
+            <input id="eventNo"  type="text" placeholder="Event #" class="col-sm-10 form-control" value.bind="event.eventNo" />
+          </div>
+
+          <div class="form-group row">
+            <label for="year" class="col-sm-2 col-form-label">Year</label>
+            <select id="year" class="col-sm-10 form-control" value.bind="event.year">
+              <option repeat.for="year of years" model.bind="year.year">${year.year}</option>
+            </select>
+          </div>
+
+          <div class="form-group row">
+            <label for="tournament" class="col-sm-2 col-form-label">Tournament</label>
+            <select id="tournament" class=" col-sm-10 form-control" value.bind="event.tournamentId">
+              <option repeat.for="tournament of tournaments" model.bind="tournament.id">${tournament.name}</option>
+            </select>
+          </div>
+
+          <div class="form-group row">
+            <label for="status" class="col-sm-2 col-form-label">Status</label>
+            <select id="status" class="col-sm-10 form-control" value.bind="event.status">
+              <option repeat.for="opt of statusOptions" model.bind="opt.value">${opt.status}</option>
+            </select>
+          </div>
+
+          <div class="form-group row">
+            <label for="fee" class="col-sm-2 col-form-label">Entry Fee</label>
+            <input id="fee" class="col-sm-10 form-control" type="text" placeholder="Entry Fee" value.bind="event.entryFee" />
+           </div>
+
+          <input type="button" click.delegate="formOKOnClick()" class="btn btn-primary offset-sm-2" value="${formOKLabel}" />
+          <input type="button" click.delegate="formCancelOnClick()" class="btn btn-primary" value="${formCancelLabel}" />
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</template>

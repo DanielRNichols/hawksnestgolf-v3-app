@@ -4,46 +4,41 @@ import { ITournament } from "../../models/ITournament";
 import { NotificationServices } from "services/notificationServices";
 import { ApiError } from "models/ApiError";
 import { TournamentsApi } from "services/hawksnestgolfApi/tournamentsApi";
+import { BaseResourceUtilities } from "admin/baseResource/baseResourceUtilities";
 
 @autoinject
 export class TournamentEdit {
 
-  public formTitle = "Edit Tournament";
+  formTitle = "Edit Tournament";
   formOKLabel = "Save";
   formCancelLabel = "Cancel";
-  formOKOnClick = () => this.save();
+  formOKOnClick = () => this.update();
   formCancelOnClick = () => this.cancel();
   formReadOnly = false;
-  public tournament: ITournament;
+  tournament: ITournament;
+  private returnRoute = "tournamentsList";
 
   constructor(private api: TournamentsApi, 
               private router: Router,
               private notificationService: NotificationServices) {
   }
 
-  async activate(params) {
-    const result = await this.api.getById(params.id);
+  async activate(tournament: ITournament) {
+    const result = await this.api.getById(tournament.id);
     if(result instanceof ApiError) {
-      this.notificationService.error("Add Tournaments", `Error reading Tournament: ${params.id}`);
+      this.notificationService.error(this.formTitle, `Error reading Tournament: ${tournament.id}`);
     } else {
       this.tournament = result;
     }
   }
 
-  async save() {
-    const result = await this.api.update(this.tournament);
-    if(result instanceof ApiError) {
-      this.notificationService.error(result.status.toString(), result.message);
-    } else {
-      this.notificationService.info("Edit Tournament", "Saved");
-    }
-    this.router.navigateToRoute("tournamentsList");
-
+  async update() {
+    BaseResourceUtilities.update(this.api, this.tournament, this.returnRoute, this.tournament.name, this.formTitle);
   }
 
   cancel() {
-    this.notificationService.info("Edit Tournament", "Canceled")
-    this.router.navigateToRoute("tournamentsList");
+    this.notificationService.info(this.formTitle, "Canceled")
+    this.router.navigateToRoute(this.returnRoute);
 
   }
 

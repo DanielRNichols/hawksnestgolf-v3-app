@@ -2,37 +2,32 @@ import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { IBet } from "../../models/IBet";
 import { NotificationServices } from "services/notificationServices";
-import { ApiError } from "models/ApiError";
 import { BetsApi } from "services/hawksnestgolfApi/betsApi";
+import { BaseResourceUtilities } from "admin/baseResource/baseResourceUtilities";
 
 @autoinject
 export class BetAdd {
-  formTitle = "New Bet";
+  formTitle = "Add Bet";
   formOKLabel = "Save";
   formCancelLabel = "Cancel";
-  formOKOnClick = () => this.save();
+  formOKOnClick = () => this.add();
   formCancelOnClick = () => this.cancel();
   formReadOnly = false;
   bet: IBet = { id: 0, name: "", defAmount: 0 };
+  private returnRoute = "betsList";
 
   constructor(private api: BetsApi,
               private router: Router,
               private notificationService: NotificationServices) {
   }
 
-  async save() {
-    const result = await this.api.add(this.bet)
-    if(result instanceof ApiError) {
-      this.notificationService.error("Add Bets", `Error adding ${this.bet.name}`);
-    } else {
-      this.notificationService.info("Add Bets", `${this.bet.name} was added`);
-    }
-    this.router.navigateToRoute("betsList");
+  async add() {
+    await BaseResourceUtilities.saveItem(this.api, this.bet, this.returnRoute, this.bet.name, this.formTitle)
   }
 
   cancel() {
-    this.notificationService.info("Add Bets", "Canceled");
-    this.router.navigateToRoute("betsList");
+    this.notificationService.info(this.formTitle, "Canceled");
+    this.router.navigateToRoute(this.returnRoute);
   }
 
 

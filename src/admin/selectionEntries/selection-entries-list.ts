@@ -49,8 +49,8 @@ export class SelectionEntriesList extends ItemsList {
 
     this.actions =
       [
-        // { action: (selectionEntry) => this.editItem(selectionEntry, "selectionEntryEdit"), class: "actionButton", tooltip: "Edit SelectionEntry", glyph: "glyphicon glyphicon-edit"},
-        // { action: (selectionEntry) => this.deleteItem(selectionEntry), class: "actionButton delete", tooltip: "Delete SelectionEntry", glyph: "glyphicon glyphicon-trash" },
+        // { action: (selectionEntry) => this.editItem(selectionEntry, "selectionEntryEdit"), class: "actionButton", tooltip: "Edit SelectionEntry", glyph: "fas fa-edit"},
+        // { action: (selectionEntry) => this.deleteItem(selectionEntry), class: "actionButton delete", tooltip: "Delete SelectionEntry", glyph: "fas fa-trash" },
       ];
   }
 

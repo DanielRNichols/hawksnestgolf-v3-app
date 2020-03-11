@@ -8,6 +8,8 @@ import { IPick } from "./IPick";
 import { IFieldEntry } from "./IFieldEntry";
 import { ISelectionEntry } from "./ISelectionEntry";
 import { ISelectionPick } from "./ISelectionPick";
+import { IYear } from "./IYear";
+import { IEventStatus } from "./IEventStatus";
 
 export type IItem = 
   IGolfer | 
@@ -19,7 +21,9 @@ export type IItem =
   IPick | 
   IFieldEntry | 
   ISelectionEntry | 
-  ISelectionPick;
+  ISelectionPick |
+  IYear |
+  IEventStatus;
 
   export interface IDbItem {
     itemType: IItem;

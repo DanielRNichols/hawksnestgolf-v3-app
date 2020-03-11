@@ -1,29 +1,13 @@
-import { autoinject } from 'aurelia-framework';
-import {IGolfer} from '../../models/IGolfer';
-import { ApiDataService } from "./apiDataService";
-import { IHawksNestGolfApi } from './IHawksNestGolfApi';
-import { IQueryParams } from 'services/queryParamsService';
-import { ApiError } from 'models/ApiError';
+import {IFieldEntry} from '../../models/IFieldEntry';
+import { ResourceApi } from './hawksnestgolfApi';
 
-@autoinject()
-export class FieldApi implements IHawksNestGolfApi {
-  private resourceName: string = 'field';
-  private api: ApiDataService;
+export class FieldApi extends ResourceApi<IFieldEntry> {
 
-  constructor(api: ApiDataService) {
-    this.api = api;
+  constructor() {
+    super('field');
   }
 
-  public async get(params: IQueryParams = {}): Promise<IGolfer[] | ApiError> {
-    return this.api.fetch<IGolfer>(this.resourceName, params);
+  deleteAll() {
+    return this.api.delete('fields', 'all');
   }
-
-  public async getById(id: string | number): Promise<IGolfer | ApiError> {
-    return this.api.fetchById<IGolfer>(this.resourceName, id);
-  }
-
-  public async add(bet: IGolfer) {
-    return this.api.post(this.resourceName, bet);
-  }
-
 }

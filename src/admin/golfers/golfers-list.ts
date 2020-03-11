@@ -34,8 +34,8 @@ export class GolfersList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Golfer", tooltipPlacement: "bottom", onClick: () => this.newItem("golferAdd"), glyph: "fas fa-plus" },
-        { tooltipTitle: "Update Rankings", tooltipPlacement: "bottom", onClick: () => this.updateRankings(), glyph: "fas fa-sync" },
+        { tooltipTitle: "New Golfer", tooltipPlacement: "bottom", onClick: () => this.newItem("golferAdd"), glyph: "fas fa-plus", label: "Add Golfer" },
+        { tooltipTitle: "Update Rankings", tooltipPlacement: "bottom", onClick: () => this.updateRankings(), glyph: "fas fa-sync" , label: "Update Rankings"},
 
       ];
 
@@ -53,8 +53,8 @@ export class GolfersList extends ItemsList {
 
     this.actions =
       [
-        //{ action: (item) => this.editItem(item, "golferEdit"), className: "actionButton", tooltip: "Edit Item", glyph: "glyphicon glyphicon-edit"},
-        //{ action: (item) => this.deleteItem(item), className: "actionButton delete", tooltip: "Delete Item", glyph: "glyphicon glyphicon-trash" },
+        { action: (item: IGolfer) => this.editItem(item, "golferEdit"), className: "actionButton", tooltip: "Edit Item", glyph: "fas fa-edit"},
+        { action: (item: IGolfer) => this.deleteItem(item, "golferDelete"), className: "actionButton delete", tooltip: "Delete Item", glyph: "fas fa-trash" },
       ];
   }
 
@@ -64,7 +64,7 @@ export class GolfersList extends ItemsList {
 
   updateRankings() {
     console.log("Update World and FedEx rankings");
-    // this.api.patch("golfers/rankings");
+    this.api.updateRankings();
   }
 
 }
