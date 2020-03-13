@@ -1,5 +1,5 @@
 import {IPlayer} from '../../models/IPlayer';
-import { ResourceApi } from './hawksnestgolfApi';
+import { ResourceApi } from './resourceApi';
 
 export class PlayersApi extends ResourceApi<IPlayer> {
   constructor() {

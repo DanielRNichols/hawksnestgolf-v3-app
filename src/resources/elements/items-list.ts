@@ -15,6 +15,8 @@ export class ItemsList {
     private eventAggregator: EventAggregator;
     private pageSize: number = 25;
 
+    rowNum = 0;
+
     constructor(sortOrderServices: SortOrderServices, 
                 eventAggregator: EventAggregator) {
         this.sortOrderServices = sortOrderServices;

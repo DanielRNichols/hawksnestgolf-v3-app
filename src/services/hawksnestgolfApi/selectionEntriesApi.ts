@@ -1,12 +1,12 @@
 import { autoinject } from 'aurelia-framework';
 import {ISelectionEntry} from '../../models/ISelectionEntry';
 import { ApiDataService } from "./apiDataService";
-import { IHawksNestGolfApi } from './IHawksNestGolfApi';
+import { IResourceApi } from './IResourceApi';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
 
 @autoinject()
-export class SelectionEntriesApi implements IHawksNestGolfApi {
+export class SelectionEntriesApi implements IResourceApi {
   private resourceName: string = 'selectionentries';
   private api: ApiDataService;
 

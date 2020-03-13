@@ -1,5 +1,5 @@
 import {ITournament} from '../../models/ITournament';
-import { ResourceApi } from './hawksnestgolfApi';
+import { ResourceApi } from './resourceApi';
 
 export class TournamentsApi extends ResourceApi<ITournament> {
 

@@ -4,7 +4,7 @@ import { Router } from "aurelia-router";
 
 import { ISortOrderParams } from './sortOrderServices';
 import { NotificationServices } from './notificationServices';
-import { IHawksNestGolfApi } from './hawksnestgolfApi/IHawksNestGolfApi';
+import { IResourceApi } from './hawksnestgolfApi/IResourceApi';
 import { IQueryParams } from './queryParamsService';
 import { IItem } from '../models/IItem';
 import { ApiError } from 'models/ApiError';

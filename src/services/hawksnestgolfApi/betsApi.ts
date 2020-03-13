@@ -1,5 +1,5 @@
 import {IBet} from '../../models/IBet';
-import { ResourceApi } from './hawksnestgolfApi';
+import { ResourceApi } from './resourceApi';
 
 export class BetsApi extends ResourceApi<IBet> {
 

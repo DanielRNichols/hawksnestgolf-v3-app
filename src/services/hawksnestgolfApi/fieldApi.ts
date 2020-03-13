@@ -1,5 +1,5 @@
 import {IFieldEntry} from '../../models/IFieldEntry';
-import { ResourceApi } from './hawksnestgolfApi';
+import { ResourceApi } from './resourceApi';
 
 export class FieldApi extends ResourceApi<IFieldEntry> {
 

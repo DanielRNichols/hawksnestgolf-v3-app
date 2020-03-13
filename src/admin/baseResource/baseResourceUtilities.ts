@@ -4,18 +4,18 @@ import { IBet } from "../../models/IBet";
 import { NotificationServices } from "services/notificationServices";
 import { ApiError } from "models/ApiError";
 import { PromptDialogServices } from "services/promptDialogServices";
-import { IHawksNestGolfApi } from "services/hawksnestgolfApi/IHawksNestGolfApi";
+import { IResourceApi } from "services/hawksnestgolfApi/IResourceApi";
 import { IItem } from "models/IItem";
 
 export class BaseResourceUtilities{
 
-  protected api: IHawksNestGolfApi;
+  protected api: IResourceApi;
   private static router: Router = Container.instance.get(Router);
   private static notificationService: NotificationServices = Container.instance.get(NotificationServices); 
   private static promptDialogServices: PromptDialogServices = Container.instance.get(PromptDialogServices);
 
 
-  static async saveItem(api: IHawksNestGolfApi, item: IItem, route: string, itemDesc: string, title: string = "") {
+  static async saveItem(api: IResourceApi, item: IItem, route: string, itemDesc: string, title: string = "") {
     const result = await api.add(item)
     if(result instanceof ApiError) {
       this.notificationService.error(title, `Error adding ${itemDesc}</br>${result.status.toString()}:  ${result.message}`);
@@ -25,7 +25,7 @@ export class BaseResourceUtilities{
     this.router.navigateToRoute(route);
   }
 
-  static async update(api: IHawksNestGolfApi, item: IItem, route: string, itemDesc: string, title: string = "") {
+  static async update(api: IResourceApi, item: IItem, route: string, itemDesc: string, title: string = "") {
     const result = await api.update(item);
     if(result instanceof ApiError) {
       this.notificationService.error(title, `Error updating ${itemDesc}</br>${result.status.toString()}:  ${result.message}`);
@@ -35,7 +35,7 @@ export class BaseResourceUtilities{
     this.router.navigateToRoute(route);
   }
 
-  static async deleteItem(api: IHawksNestGolfApi, item: IItem, route: string, itemDesc: string, title: string = "") {
+  static async deleteItem(api: IResourceApi, item: IItem, route: string, itemDesc: string, title: string = "") {
     const verified = await this.promptDialogServices.YesNo(`Delete ${itemDesc}?`);
     if(verified) {
       const result = await api.delete(item.id);

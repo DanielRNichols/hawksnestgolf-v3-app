@@ -22,6 +22,7 @@ export class GolfersList extends ItemsList {
 
     this.itemDesc = "Golfer";
 
+
     this.listParams =
       {
         listHeader: "Golfers",

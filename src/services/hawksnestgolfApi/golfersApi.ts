@@ -1,5 +1,5 @@
 import {IGolfer} from '../../models/IGolfer';
-import { ResourceApi } from './hawksnestgolfApi';
+import { ResourceApi } from './resourceApi';
 
 export class GolfersApi extends ResourceApi<IGolfer> {
 

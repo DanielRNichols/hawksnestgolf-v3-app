@@ -1,12 +1,12 @@
 import { autoinject } from 'aurelia-framework';
 import {IPick} from '../../models/IPick';
 import { ApiDataService } from "./apiDataService";
-import { IHawksNestGolfApi } from './IHawksNestGolfApi';
+import { IResourceApi } from './IResourceApi';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
 
 @autoinject()
-export class PicksApi implements IHawksNestGolfApi {
+export class PicksApi implements IResourceApi {
   private resourceName: string = 'picks';
 
   constructor(private api: ApiDataService) {

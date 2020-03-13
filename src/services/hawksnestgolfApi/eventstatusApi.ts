@@ -1,5 +1,5 @@
 import {IEventStatus} from '../../models/IEventStatus';
-import { ResourceApi } from './hawksnestgolfApi';
+import { ResourceApi } from './resourceApi';
 
 export class EventStatusApi extends ResourceApi<IEventStatus> {
   constructor() {

@@ -1,11 +1,11 @@
 import { Container } from 'aurelia-framework';
 import { ApiDataService } from "./apiDataService";
-import { IHawksNestGolfApi } from './IHawksNestGolfApi';
+import { IResourceApi } from './IResourceApi';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
 import { IItem } from 'models/IItem';
 
-export class ResourceApi<T extends IItem> implements IHawksNestGolfApi {
+export class ResourceApi<T extends IItem> implements IResourceApi {
   protected api: ApiDataService;
   private resourceName: string;
 
