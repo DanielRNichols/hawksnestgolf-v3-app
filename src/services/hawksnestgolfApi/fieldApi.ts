@@ -4,7 +4,7 @@ import { ResourceApi } from './resourceApi';
 export class FieldApi extends ResourceApi<IFieldEntry> {
 
   constructor() {
-    super('field');
+    super('field', "Field Entry");
   }
 
   deleteAll() {

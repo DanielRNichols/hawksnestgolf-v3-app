@@ -8,6 +8,7 @@ import { ApiError } from 'models/ApiError';
 @autoinject()
 export class EntriesApi implements IResourceApi {
   private resourceName: string = 'entries';
+  public resourceDescription = "Entry";
   private api: ApiDataService;
 
   constructor(api: ApiDataService) {

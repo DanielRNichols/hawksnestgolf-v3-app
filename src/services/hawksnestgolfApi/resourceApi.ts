@@ -8,19 +8,17 @@ import { IItem } from 'models/IItem';
 
 export class ResourceApi<T extends IItem> implements IResourceApi {
   protected api: ApiDataService;
-  protected isBusy = false;
   private resourceName: string;
+  public resourceDescription: string = "";
 
-  constructor(resourceName: string) {
+  constructor(resourceName: string, resourceDescription: string) {
     this.api = Container.instance.get(ApiDataService);
     this.resourceName = resourceName;
-
+    this.resourceDescription = resourceDescription;
   }
 
   public async get(params: IQueryParams = {}): Promise<T[] | ApiError> {
-    
     const result = this.api.fetch<T>(this.resourceName, params);
-
     return result;
   }
 

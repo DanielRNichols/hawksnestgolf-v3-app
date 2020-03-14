@@ -4,7 +4,7 @@ import { ResourceApi } from './resourceApi';
 export class GolfersApi extends ResourceApi<IGolfer> {
 
   constructor() {
-    super('golfers');
+    super('golfers', "Golfer");
   }
 
   updateRankings() {

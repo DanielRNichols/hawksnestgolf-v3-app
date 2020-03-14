@@ -8,6 +8,7 @@ import { ApiError } from 'models/ApiError';
 @autoinject()
 export class SelectionPicksApi implements IResourceApi {
   private resourceName: string = 'selectionpicks';
+  public resourceDescription = "Selection Pick";
   private api: ApiDataService;
 
   constructor(api: ApiDataService) {

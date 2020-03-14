@@ -13,13 +13,9 @@ import { PlayersApi } from 'services/hawksnestgolfApi/playersApi';
 export class PlayersList extends ItemsList {
 
   // The parent class ItemsList requires Router, NotificationServices and EventAggregator
-  constructor(private api: PlayersApi,
-              private sortOrderServices: SortOrderServices,
-              router: Router,
-              notifications: NotificationServices,
-              eventAggregator: EventAggregator) {
-    super(router, notifications, eventAggregator);
-    this.itemDesc = "Player";
+  constructor(protected api: PlayersApi,
+              private sortOrderServices: SortOrderServices) {
+    super(api);
 
     this.listParams =
       {

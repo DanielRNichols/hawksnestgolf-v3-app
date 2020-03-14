@@ -51,9 +51,7 @@ export class App {
           //   },
           // bets
           {route: ["admin/bets"],      moduleId: "admin/bets/bets-list", title: "Bets",       name: "betsList",  nav: true},
-          {route: ["admin/betEdit"],   moduleId: "admin/bets/betEdit",   title: "Edit Bet",   name: "betEdit",   nav: false},
-          {route: ["admin/betAdd"],    moduleId: "admin/bets/betAdd",    title: "Add Bet",    name: "betAdd",    nav: false},
-          {route: ["admin/betDelete"], moduleId: "admin/bets/betDelete", title: "Delete Bet", name: "betDelete", nav: false},
+          {route: ["admin/betEdit"],   moduleId: "admin/bets/bet-edit",  title: "Edit Bet",   name: "betEdit",   nav: false},
 
           //players
           {route: ["admin/players"],      moduleId: "admin/players/players-list", title: "Players",       name: "playersList",  nav: true},

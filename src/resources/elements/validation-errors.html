@@ -1,0 +1,7 @@
+<template bindable="controller">
+  <ul if.bind="controller.errors">
+    <li repeat.for="error of controller.errors">
+      ${error.message}
+    </li>
+  </ul>
+</template>

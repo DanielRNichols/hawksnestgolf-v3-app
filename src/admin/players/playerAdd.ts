@@ -24,7 +24,7 @@ export class PlayerAdd {
   }
 
   async update() {
-    await BaseResourceUtilities.saveItem(this.api, this.player, this.returnRoute, this.player.name, this.formTitle)
+    await BaseResourceUtilities.saveItem(this.api, this.player, this.returnRoute)
   }
 
   cancel() {

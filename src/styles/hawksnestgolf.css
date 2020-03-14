@@ -52,7 +52,6 @@
 }
 
 .actionButton.delete {
-
   color: red;
 }
 
@@ -107,3 +106,6 @@ background-color: #ECECEC;
   color: lightgray;
 }
 
+.btn.disabled {
+  cursor: not-allowed;
+}

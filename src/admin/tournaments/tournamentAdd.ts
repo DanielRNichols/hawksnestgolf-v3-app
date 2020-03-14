@@ -23,7 +23,7 @@ export class TournamentAdd {
   }
 
   async update() {
-    await BaseResourceUtilities.saveItem(this.api, this.tournament, this.returnRoute, this.tournament.name, this.formTitle)
+    await BaseResourceUtilities.saveItem(this.api, this.tournament, this.returnRoute)
   }
 
   cancel() {

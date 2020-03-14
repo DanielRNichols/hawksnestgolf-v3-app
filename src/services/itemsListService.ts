@@ -1,4 +1,4 @@
-import { autoinject } from 'aurelia-framework';
+import { Container } from 'aurelia-framework';
 import { EventAggregator, Subscription } from 'aurelia-event-aggregator';
 import { Router } from "aurelia-router";
 
@@ -8,6 +8,7 @@ import { IResourceApi } from './hawksnestgolfApi/IResourceApi';
 import { IQueryParams } from './queryParamsService';
 import { IItem } from '../models/IItem';
 import { ApiError } from 'models/ApiError';
+import { PromptDialogServices } from './promptDialogServices';
 
 export interface IFilterParams {
   filterString: string;
@@ -51,9 +52,9 @@ export interface IActionParams {
   glyph: string
 }
 
-export abstract class ItemsList {
+export class ItemsList {
 
-  public itemDesc: string = '';
+  public resourceDesc: string = '';
   public listParams: IItemsListParams;
   public toolbar: IToolbarParams[] = [];
   public columns: IColumnParams[] = [];
@@ -61,12 +62,18 @@ export abstract class ItemsList {
   public items: IItem[] = [];
   private itemsListChangedSubscription: Subscription;
 
-  constructor(protected router: Router,
-              protected notification: NotificationServices,
-              protected eventAggregator: EventAggregator) { 
-  }
+  private router: Router;
+  private notificationService: NotificationServices;
+  private eventAggregator: EventAggregator;
+  private promptDialogServices: PromptDialogServices;
 
-  abstract async fetchData(params: IQueryParams): Promise<IItem[] | ApiError>;
+  constructor(protected api: IResourceApi) { 
+    this.router = Container.instance.get(Router);
+    this.notificationService = Container.instance.get(NotificationServices);
+    this.eventAggregator = Container.instance.get(EventAggregator);
+    this.promptDialogServices = Container.instance.get(PromptDialogServices);
+    this.api = api;
+  }
 
   async bind() {
     const result = await this.getItems();
@@ -93,39 +100,59 @@ export abstract class ItemsList {
         : ''}`,
       top: this.listParams.top,
     };
-    const result: any = await this.fetchData(params);
+    const result: any = await this.api.get(params);
     //console.log(result);
     return result;
   }
 
   newItem(addRoute: string) {
-    console.log(`New ${this.itemDesc}`);
-    this.router.navigateToRoute(addRoute);
+    console.log(`New ${this.resourceDesc}`);
+    this.router.navigateToRoute(addRoute, {id: 0});
   }
 
   editItem(item: IItem, editRoute: string) {
-    console.log(`Edit ${this.itemDesc}`);
+    console.log(`Edit ${this.resourceDesc}`);
     this.router.navigateToRoute(editRoute, { id: item.id });
   }
 
-  deleteItem(item: IItem, deleteRoute: string) {
-    console.log(`Delete ${this.itemDesc}`);
-    this.router.navigateToRoute(deleteRoute, { id: item.id });
+  // deleteItem(item: IItem, deleteRoute: string) {
+  //   console.log(`Delete ${this.itemDesc}`);
+  //   this.router.navigateToRoute(deleteRoute, { id: item.id });
+  // }
+
+
+  async deleteItem(item: IItem, itemDesc: string) {
+    const title = `Delete ${this.resourceDesc}`;
+    const verified = await this.promptDialogServices.YesNo(`${title}: ${itemDesc}?`);
+    if(verified) {
+      const result = await this.api.delete(item.id);
+      // remove it from the items list to update the display
+      this.removeItem(item.id);
+      console.log(`Deleted: ${result}`);
+      if(result instanceof ApiError) {
+        this.notificationService.error(title, `Error deleting ${itemDesc}</br>${result.status.toString()}:  ${result.message}`);
+       } else {
+        this.notificationService.info(title, `Deleted ${itemDesc}`);
+      }
+    } else {
+      this.notificationService.info(title, "Canceled");
+
+    }
   }
 
-  // removeItem(id) {
-  //     let len = this.items.length;
-  //     let foundIndex = -1;
-  //     for (let i = 0; i < len, foundIndex == -1; i++) {
-  //         if (this.items[i].id == id) {
-  //             foundIndex = i;
-  //         }
-  //     }
-  //     if (foundIndex >= 0) {
-  //         this.items.splice(foundIndex, 1);
-  //     }
+  removeItem(id) {
+      let len = this.items.length;
+      let foundIndex = -1;
+      for (let i = 0; i < len && foundIndex == -1; i++) {
+          if (this.items[i].id == id) {
+              foundIndex = i;
+          }
+      }
+      if (foundIndex >= 0) {
+          this.items.splice(foundIndex, 1);
+      }
 
-  // }
+  }
 
   addSubscriptions() {
     // subscribe to ItemsListChanged event

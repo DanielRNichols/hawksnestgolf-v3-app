@@ -4,6 +4,6 @@ import { ResourceApi } from './resourceApi';
 export class EventsApi extends ResourceApi<IEvent> {
 
   constructor() {
-    super('events');
+    super('events', "Event");
   }
 }

@@ -18,14 +18,11 @@ export class BetsList extends ItemsList {
   actions: IActionParams[];
 
   // The parent class ItemsList requires Router, NotificationServices, EventAggregator, DialogService
-  constructor(private api: BetsApi,
-              private sortOrderServices: SortOrderServices,
-              router: Router,
-              notifications: NotificationServices,
-              eventAggregator: EventAggregator) {
-    super(router, notifications, eventAggregator);
+  constructor(protected api: BetsApi,
+              private sortOrderServices: SortOrderServices) {
+    super(api);
     
-    this.itemDesc = 'Bet';
+    this.resourceDesc = 'Bet';
 
     this.listParams =
       {
@@ -38,7 +35,7 @@ export class BetsList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Bet", tooltipPlacement: "bottom", onClick: () => this.newItem("betAdd"), glyph: "fas fa-plus", label: "Add Bet" },
+        { tooltipTitle: "New Bet", tooltipPlacement: "bottom", onClick: () => this.newItem("betEdit"), glyph: "fas fa-plus", label: "Add Bet" },
       ];
 
     this.columns =
@@ -51,13 +48,7 @@ export class BetsList extends ItemsList {
     this.actions =
       [
         { action: (bet: IBet) => this.editItem(bet, "betEdit"), className: "actionButton", tooltip: "Edit Bet", glyph: "fas fa-edit"},
-        { action: (bet: IBet) => this.deleteItem(bet, "betDelete"), className: "actionButton delete", tooltip: "Delete Bet", glyph: "fas fa-trash" },
+        { action: (bet: IBet) => this.deleteItem(bet, bet.name), className: "actionButton delete", tooltip: "Delete Bet", glyph: "fas fa-trash" },
       ];
   }
-
-  fetchData = async (params: IQueryParams): Promise<IBet[] | ApiError> => {
-    return this.api.get(params);
-  }
-
-
 }

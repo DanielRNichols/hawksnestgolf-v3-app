@@ -4,6 +4,6 @@ import { ResourceApi } from './resourceApi';
 export class BetsApi extends ResourceApi<IBet> {
 
   constructor() {
-    super('bets');
+    super('bets', "Bet");
   }
 }

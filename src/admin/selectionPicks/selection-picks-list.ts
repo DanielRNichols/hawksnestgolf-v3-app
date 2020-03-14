@@ -15,15 +15,10 @@ import { ApiError } from 'models/ApiError';
 export class SelectionPicksList extends ItemsList {
 
   // The parent class ItemsList requires Router, NotificationServices and EventAggregator
-  constructor(private api: SelectionPicksApi,
-              private sortOrderServices: SortOrderServices,
-              router: Router,
-              notifications: NotificationServices,
-              eventAggregator: EventAggregator, ) {
-    super(router, notifications, eventAggregator);
+  constructor(protected api: SelectionPicksApi,
+              private sortOrderServices: SortOrderServices) {
+    super(api);
     
-    this.itemDesc = 'SelectionPick';
-
     this.listParams =
       {
         listHeader: "SelectionPicks",
