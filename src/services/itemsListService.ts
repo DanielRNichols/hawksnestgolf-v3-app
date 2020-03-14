@@ -94,7 +94,7 @@ export abstract class ItemsList {
       top: this.listParams.top,
     };
     const result: any = await this.fetchData(params);
-    console.log(result);
+    //console.log(result);
     return result;
   }
 

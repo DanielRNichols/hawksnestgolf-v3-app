@@ -14,6 +14,8 @@ export class ItemsList {
     private sortOrderServices: SortOrderServices;
     private eventAggregator: EventAggregator;
     private pageSize: number = 25;
+    private apiIsBusy = false;
+    private isLoading;
 
     rowNum = 0;
 
@@ -22,6 +24,22 @@ export class ItemsList {
         this.sortOrderServices = sortOrderServices;
         this.eventAggregator = eventAggregator;
 
+        this.eventAggregator.subscribe("apiStarted", () => {
+          this.apiIsBusy = true;
+          console.log("Api started");
+        });
+    
+        this.eventAggregator.subscribe("apiDone", () => {
+          this.apiIsBusy = false;
+          console.log("Api done");
+        });
+
+        this.isLoading = true;
+    
+    }
+
+    attached() {
+      this.isLoading = false;
     }
 
     itemsChanged(newValue: any) {

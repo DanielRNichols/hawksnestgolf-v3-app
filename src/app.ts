@@ -93,13 +93,7 @@ export class App {
                 name: "picks",
                 nav: true
             },
-            {
-                route: ["admin/golfers"],
-                moduleId: "admin/golfers/golfers-list",
-                title: "Golfers",
-                name: "golfersList",
-                nav: true
-            },
+
             {
                 route: ["admin/field"],
                 moduleId: "admin/field/field-list",

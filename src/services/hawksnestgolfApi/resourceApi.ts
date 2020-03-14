@@ -1,5 +1,6 @@
 import { Container } from 'aurelia-framework';
 import { ApiDataService } from "./apiDataService";
+import { EventAggregator } from 'aurelia-event-aggregator';
 import { IResourceApi } from './IResourceApi';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
@@ -7,15 +8,20 @@ import { IItem } from 'models/IItem';
 
 export class ResourceApi<T extends IItem> implements IResourceApi {
   protected api: ApiDataService;
+  protected isBusy = false;
   private resourceName: string;
 
   constructor(resourceName: string) {
     this.api = Container.instance.get(ApiDataService);
     this.resourceName = resourceName;
+
   }
 
   public async get(params: IQueryParams = {}): Promise<T[] | ApiError> {
-    return this.api.fetch<T>(this.resourceName, params);
+    
+    const result = this.api.fetch<T>(this.resourceName, params);
+
+    return result;
   }
 
   public async getById(id: string | number): Promise<T | ApiError> {

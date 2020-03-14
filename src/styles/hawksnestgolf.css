@@ -3,6 +3,12 @@
     width: 95%;
   }
 }*/
+
+.busySpinner {
+  margin-left: 10;
+  color: cornflowerblue;
+}
+
 .logoText {
     /*    font-family: 'Permanent Marker', 'Arial Narrow', times, serif;*/
     font-family: 'Times New Roman', Arial, Verdana, Helvetica, sans-serif;

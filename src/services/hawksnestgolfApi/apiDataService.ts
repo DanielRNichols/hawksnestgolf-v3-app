@@ -3,13 +3,15 @@ import { autoinject } from 'aurelia-framework';
 import { IItem } from '../../models/IItem';
 import { IQueryParams, QueryParamsService } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
 
 @autoinject()
 export class ApiDataService {
 
   constructor(private httpClient: HttpClient, 
-              private queryParamsService: QueryParamsService
+              private queryParamsService: QueryParamsService,
+              private eventAggregator: EventAggregator
              ) {
     this.httpClient = httpClient;
 
@@ -47,9 +49,9 @@ export class ApiDataService {
     try {
       const response = await this.httpClient.fetch(url);
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       if(response.ok) {
-        console.log(data);
+        //console.log(data);
         return data as T[];
       } else {
         return new ApiError(response.status, data.message);
@@ -66,7 +68,7 @@ export class ApiDataService {
       const response = await this.httpClient.fetch(url);
       const data = await response.json();
       if(response.ok) {
-        console.log(data);
+        //console.log(data);
         return data as T;
       } else {
         return new ApiError(response.status, data.message);
@@ -83,7 +85,7 @@ export class ApiDataService {
       const response = await this.httpClient.fetch(url, {method: 'POST', body: json(item)});
       const data = await response.json();
       if(response.ok) {
-        console.log(data);
+        //console.log(data);
         return data.id;
       } else {
         return new ApiError(response.status, data.message);
@@ -116,8 +118,10 @@ export class ApiDataService {
     const url = resourceName;
     console.log(url);
     try {
+      this.apiIsRequesting();
       const response = await this.httpClient.fetch(url, {method: 'PATCH'});
       const data = await response.json();
+      this.apiIsDone();
       if(response.ok) {
          return true;
       } else {
@@ -165,5 +169,14 @@ export class ApiDataService {
     }
   }
 
+  apiIsRequesting() {
+    this.eventAggregator.publish("apiStarted");
+    console.log("apiStarted");
+  }
+
+  apiIsDone() {
+    this.eventAggregator.publish("apiDone");
+    console.log("apiDone");
+  }
 
 }
