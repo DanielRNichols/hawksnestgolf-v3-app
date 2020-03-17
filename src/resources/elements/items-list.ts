@@ -14,6 +14,7 @@ export class ItemsList {
     private sortOrderServices: SortOrderServices;
     private eventAggregator: EventAggregator;
     private pageSize: number = 25;
+    private showFilter = true;
     private apiIsBusy = false;
     private isLoading;
 
@@ -34,12 +35,14 @@ export class ItemsList {
           console.log("Api done");
         });
 
+
         this.isLoading = true;
     
     }
 
     attached() {
       this.isLoading = false;
+      this.showFilter = !this.listParams.filterParams.hideFilter;
     }
 
     itemsChanged(newValue: any) {

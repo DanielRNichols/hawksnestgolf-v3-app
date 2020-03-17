@@ -1,29 +1,17 @@
 import { autoinject } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
-import { Router } from "aurelia-router";
 import { ItemsList } from '../../services/itemsListService';
 import { FieldApi } from '../../services/hawksnestgolfApi/fieldApi';
 import { SortOrderServices, ISortOrderParams } from 'services/sortOrderServices';
-import { NotificationServices } from 'services/notificationServices';
-import { IGolfer } from 'models/IGolfer';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
 import { IFieldEntry } from 'models/IFieldEntry';
-import { PromptDialogServices } from 'services/promptDialogServices';
 
 @autoinject()
 export class FieldList extends ItemsList {
 
-  // The parent class ItemsList requires Router, NotificationServices and EventAggregator
-  constructor(private api: FieldApi,
-              private sortOrderServices: SortOrderServices,
-              private promptDialogServices: PromptDialogServices,
-              router: Router,
-              notificationService: NotificationServices,
-              eventAggregator: EventAggregator) {
-    super(router, notificationService, eventAggregator);
-
-    this.itemDesc = "The Field";
+  constructor(protected api: FieldApi,
+              private sortOrderServices: SortOrderServices) {
+    super(api);
 
     this.listParams =
       {
@@ -66,23 +54,6 @@ export class FieldList extends ItemsList {
 
   async deleteAll() {
     console.log("Delete the field");
-
-
-    // const verified = await this.promptDialogServices.YesNo(`Delete the Field?`);
-    // if(verified) {
-    //   const result = await this.api.deleteAll();
-    //   console.log(`Deleted: ${result}`);
-    //   if(result instanceof ApiError) {
-    //     this.notificationService.error(title, `Error deleting the Field</br>${result.status.toString()}:  ${result.message}`);
-
-    //   } else {
-    //     this.notificationService.info(title, `Deleted the Field`);
-
-    //   }
-    // } else {
-    //   this.notificationService.info(title, "Canceled");
-
-    // }
 
   }
 

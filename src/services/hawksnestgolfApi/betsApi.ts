@@ -6,4 +6,6 @@ export class BetsApi extends ResourceApi<IBet> {
   constructor() {
     super('bets', "Bet");
   }
+
+  itemDescription(bet: IBet) {return bet.name}
 }

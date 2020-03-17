@@ -1,6 +1,6 @@
 import { ITournament } from "./ITournament";
+import { IEventStatus } from "./IEventStatus";
 
-export enum EventStatus { NotStarted, InProgress, Completed };
 export const EventStatusDescriptions: Array<string> = ['Not Started', 'In Progress', 'Completed'];
 
 export interface IEvent {
@@ -8,7 +8,8 @@ export interface IEvent {
   eventNo: number;
   year: number;
   entryFee: number;
-  status: EventStatus;
+  status: number;
   tournamentId: number;
   tournament?: ITournament;
+  eventStatus?: IEventStatus;
 }

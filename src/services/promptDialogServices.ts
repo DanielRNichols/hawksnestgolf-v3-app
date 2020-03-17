@@ -24,6 +24,7 @@ export class PromptDialogServices {
   }
 
   async YesNo(prompt: string) : Promise<boolean> {
+    console.log(`YesNo Prompt = ${prompt}`);
     const props: PromptDialogProps = {prompt: prompt, okLabel: "Yes", cancelLabel: "No"};
     return this.open(props);
   }

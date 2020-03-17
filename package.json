@@ -14,6 +14,7 @@
     "aurelia-bootstrapper": "^2.3.2",
     "aurelia-dialog": "^2.0.0",
     "aurelia-fetch-client": "^1.8.2",
+    "aurelia-ui-virtualization": "^1.0.0-beta.7",
     "aurelia-validation": "^1.6.0",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",

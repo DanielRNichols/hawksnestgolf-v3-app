@@ -1,0 +1,42 @@
+<template>
+  <div class="container">
+    <require from="../../resources/elements/validation-errors.html"></require>
+    <div class="card">
+
+      <div class="card-body">
+        <h5 class="card-title">${formTitle}</h5>
+        <form>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="playerName">Name</label>
+            <input id="playerName" type="text" placeholder="Name" class="col-sm-10 form-control" value.bind="player.name & validate" readonly.bind="formReadOnly" />
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="userName">User Name1</label>
+            <input id="userName" type="text" placeholder="User Name" class="col-sm-10 form-control" value.bind="player.userName & validate" readonly.bind="formReadOnly" />
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="email">Email</label>
+            <input id="email" type="text" placeholder="Email address" value.bind="player.email & validate" class="col-sm-10 form-control" readonly.bind="formReadOnly" />
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label" for="email2">Email2</label>
+           <input id="email2" type="text" placeholder="Email2 address" value.bind="player.email2 & validate" class="col-sm-10 form-control" readonly.bind="formReadOnly" />
+           </div>
+
+          <div class="form-group form-check row">
+            <input class="offset-sm-2" id="isAdmin" type="checkbox" checked.bind="player.isAdmin" readonly.bind="formReadOnly" />
+            <label for="isAdmin" class="form-check-label">Is Admin</label>
+          </div>
+
+          <input class="btn btn-primary offset-sm-2 ${isValidated ? '' : 'disabled'}"  type="button" click.delegate="formOKOnClick()" value="${formOKLabel}" disabled.bind="!isValidated" />
+          <input class="btn btn-primary" type="button" click.delegate="formCancelOnClick()" value="${formCancelLabel}" />
+
+          <validation-errors controller.bind="validationController"></validation-errors>
+        </form>
+
+    </div>
+  </div>
+</template>

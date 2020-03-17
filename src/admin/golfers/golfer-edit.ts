@@ -1,28 +1,28 @@
 import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { ValidationController, ValidationControllerFactory, Validator, validateTrigger, ValidationRules } from "aurelia-validation";
-import { IBet } from "../../models/IBet";
+import { IGolfer } from "../../models/IGolfer";
 import { NotificationServices } from "services/notificationServices";
-import { BetsApi } from "services/hawksnestgolfApi/betsApi";
+import { GolfersApi } from "services/hawksnestgolfApi/golfersApi";
 import { BaseResourceUtilities, ResourceApiFormMode } from "admin/baseResource/baseResourceUtilities";
 import { ApiError } from "models/ApiError";
 
 
 @autoinject
-export class BetEdit {
+export class GolferEdit {
   private formTitle = "";
   private formOKLabel = "Save";
   private formCancelLabel = "Cancel";
   private formOKOnClick = () => this.save();
   private formCancelOnClick = () => this.cancel();
   private formReadOnly = false;
-  private bet: IBet;
+  private golfer: IGolfer;
   private mode: ResourceApiFormMode;
-  private returnRoute = "betsList";
+  private returnRoute = "golfersList";
   private validationController: ValidationController;
   private isValidated = false;
 
-  constructor(private api: BetsApi,
+  constructor(private api: GolfersApi,
               private router: Router,
               private notificationService: NotificationServices,
               private validationControllerFactory: ValidationControllerFactory,
@@ -37,18 +37,17 @@ export class BetEdit {
       });
   }
   
-  async activate(bet: IBet) {
-    console.log(bet);
-    if(bet.id > 0) {
-      const result = await this.api.getById(bet.id);
+  async activate(golfer: IGolfer) {
+    if(golfer.id > 0) {
+      const result = await this.api.getById(golfer.id);
       if(result instanceof ApiError) {
-        this.notificationService.error(this.formTitle, `Error reading Bet: ${bet.id}`);
+        this.notificationService.error(this.formTitle, `Error reading Golfer: ${golfer.id}`);
       } else {
-        this.bet = result;
+        this.golfer = result;
         this.mode = ResourceApiFormMode.Edit;
       }
     } else {
-      this.bet = { id: 0, name: "", defAmount: 10 };
+      this.golfer = { id: 0, pgaTourId: "", name: "", country: "", selectionName: "", worldRanking: 0, fedExRanking: 0, image: "" };
       this.mode = ResourceApiFormMode.Add;
     }
     this.formTitle = `${this.mode == ResourceApiFormMode.Add ? "Add" : "Edit"} ${this.api.resourceDescription}`;
@@ -59,22 +58,20 @@ export class BetEdit {
   private initializeValidationRules() {
     ValidationRules
     .ensure('name').required()
-                  .withMessage('Name cannot be empty')
-    .ensure('defAmount').required().withMessage('Default Amount is required')
-                        .range(5, 100).withMessage('Default Amount must be between $5 and $100')
-    .on(this.bet);
+    .ensure('selectionName').required()
+    .on(this.golfer);
   }
 
   private async validateForm() {
-    const results = await this.validator.validateObject(this.bet);
+    const results = await this.validator.validateObject(this.golfer);
     this.isValidated = results.every(result => result.valid);
   }
 
   async save() {
     if(this.mode == ResourceApiFormMode.Add) {
-      await BaseResourceUtilities.saveItem(this.api, this.bet, this.returnRoute);
+      await BaseResourceUtilities.saveItem(this.api, this.golfer, this.returnRoute);
     } else {
-      await BaseResourceUtilities.update(this.api, this.bet, this.returnRoute);
+      await BaseResourceUtilities.update(this.api, this.golfer, this.returnRoute);
     }
   }
 

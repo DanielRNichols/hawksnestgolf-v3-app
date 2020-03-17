@@ -5,6 +5,11 @@ import { ApiError } from "models/ApiError";
 import { IResourceApi } from "services/hawksnestgolfApi/IResourceApi";
 import { IItem } from "models/IItem";
 
+export enum ResourceApiFormMode {
+  Add,
+  Edit
+}
+
 export class BaseResourceUtilities{
 
   private static router: Router = Container.instance.get(Router);

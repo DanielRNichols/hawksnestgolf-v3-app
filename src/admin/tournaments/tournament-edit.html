@@ -1,4 +1,5 @@
 <template>
+  <require from="../../resources/elements/validation-errors.html"></require>
   <div class="container">
     <div class="card">
 
@@ -7,7 +8,7 @@
         <form>
           <div class="form-group row">
             <label class="col-sm-2 col-form-label" for="tournamentName">Name</label>
-            <input class="col-sm-10 form-control" id="tournamentName" type="text" placeholder="Name" value.bind="tournament.name"
+            <input class="col-sm-10 form-control" id="tournamentName" type="text" placeholder="Name" value.bind="tournament.name & validate"
               readonly.bind="formReadOnly" />
           </div>
 
@@ -17,15 +18,21 @@
               value.bind="tournament.url" readonly.bind="formReadOnly" />
           </div> -->
 
+          <div class="form-group row">
+            <label for="ordinal" class="col-sm-2 col-form-label">Ordinal</label>
+            <input id="ordinal"  type="text" placeholder="Ordinal" class="col-sm-10 form-control" value.bind="tournament.ordinal & validate" />
+          </div>
+
           <div class="form-group form-check row">
             <input class="offset-sm-2" id="isOfficial" type="checkbox" checked.bind="tournament.isOfficial" readonly.bind="formReadOnly" />
             <label for="isOfficial" class="form-check-label">Is Official</label>
           </div>
 
 
-          <input class="btn btn-primary offset-sm-2" type="button" click.delegate="formOKOnClick()" value="${formOKLabel}" />
-          <input class="btn btn-primary" type="button" click.delegate="formCancelOnClick()" 
-            value="${formCancelLabel}" />
+          <input class="btn btn-primary offset-sm-2 ${isValidated ? '' : 'disabled'}"  type="button" click.delegate="formOKOnClick()" value="${formOKLabel}" disabled.bind="!isValidated" />
+          <input class="btn btn-primary" type="button" click.delegate="formCancelOnClick()" value="${formCancelLabel}" />
+
+          <validation-errors controller.bind="validationController"></validation-errors>
         </form>
 
       </div>

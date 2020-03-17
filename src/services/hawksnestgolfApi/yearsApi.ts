@@ -5,4 +5,6 @@ export class YearsApi extends ResourceApi<IYear> {
   constructor() {
     super('years', "Year");
   }
+
+  itemDescription(year: IYear) { return year.year.toString();}
 }

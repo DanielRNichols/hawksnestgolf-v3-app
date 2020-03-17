@@ -1,28 +1,29 @@
 import { autoinject } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { ValidationController, ValidationControllerFactory, Validator, validateTrigger, ValidationRules } from "aurelia-validation";
-import { IBet } from "../../models/IBet";
+import { ITournament } from "../../models/ITournament";
 import { NotificationServices } from "services/notificationServices";
-import { BetsApi } from "services/hawksnestgolfApi/betsApi";
+import { TournamentsApi } from "services/hawksnestgolfApi/tournamentsApi";
 import { BaseResourceUtilities, ResourceApiFormMode } from "admin/baseResource/baseResourceUtilities";
 import { ApiError } from "models/ApiError";
 
 
 @autoinject
-export class BetEdit {
+export class TournamentEdit {
   private formTitle = "";
   private formOKLabel = "Save";
   private formCancelLabel = "Cancel";
   private formOKOnClick = () => this.save();
   private formCancelOnClick = () => this.cancel();
   private formReadOnly = false;
-  private bet: IBet;
+  private tournament: ITournament;
   private mode: ResourceApiFormMode;
-  private returnRoute = "betsList";
+  private returnRoute = "tournamentsList";
   private validationController: ValidationController;
   private isValidated = false;
+  private maxOrdinal: number;
 
-  constructor(private api: BetsApi,
+  constructor(private api: TournamentsApi,
               private router: Router,
               private notificationService: NotificationServices,
               private validationControllerFactory: ValidationControllerFactory,
@@ -37,18 +38,23 @@ export class BetEdit {
       });
   }
   
-  async activate(bet: IBet) {
-    console.log(bet);
-    if(bet.id > 0) {
-      const result = await this.api.getById(bet.id);
+  async activate(tournament: ITournament) {
+    const maxResult = await this.api.getMaxOrdinal();
+    if(maxResult instanceof ApiError) {
+      this.notificationService.error(this.formTitle, `Error reading max tournament ordinal: ${tournament.id}`);
+    } else {
+      this.maxOrdinal = maxResult + 1;
+    }
+    if(tournament.id > 0) {
+      const result = await this.api.getById(tournament.id);
       if(result instanceof ApiError) {
-        this.notificationService.error(this.formTitle, `Error reading Bet: ${bet.id}`);
+        this.notificationService.error(this.formTitle, `Error reading Tournament: ${tournament.id}`);
       } else {
-        this.bet = result;
+        this.tournament = result;
         this.mode = ResourceApiFormMode.Edit;
       }
     } else {
-      this.bet = { id: 0, name: "", defAmount: 10 };
+      this.tournament = { id: 0, name: "", url: "", isOfficial: false, ordinal: this.maxOrdinal };
       this.mode = ResourceApiFormMode.Add;
     }
     this.formTitle = `${this.mode == ResourceApiFormMode.Add ? "Add" : "Edit"} ${this.api.resourceDescription}`;
@@ -59,22 +65,21 @@ export class BetEdit {
   private initializeValidationRules() {
     ValidationRules
     .ensure('name').required()
-                  .withMessage('Name cannot be empty')
-    .ensure('defAmount').required().withMessage('Default Amount is required')
-                        .range(5, 100).withMessage('Default Amount must be between $5 and $100')
-    .on(this.bet);
+    .ensure('ordinal').required()
+                      .min(0)
+    .on(this.tournament);
   }
 
   private async validateForm() {
-    const results = await this.validator.validateObject(this.bet);
+    const results = await this.validator.validateObject(this.tournament);
     this.isValidated = results.every(result => result.valid);
   }
 
   async save() {
     if(this.mode == ResourceApiFormMode.Add) {
-      await BaseResourceUtilities.saveItem(this.api, this.bet, this.returnRoute);
+      await BaseResourceUtilities.saveItem(this.api, this.tournament, this.returnRoute);
     } else {
-      await BaseResourceUtilities.update(this.api, this.bet, this.returnRoute);
+      await BaseResourceUtilities.update(this.api, this.tournament, this.returnRoute);
     }
   }
 

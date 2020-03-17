@@ -1,10 +1,8 @@
 import { autoinject } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
 import { Router } from "aurelia-router";
 import { ItemsList } from '../../services/itemsListService';
 import { EventsApi } from '../../services/hawksnestgolfApi/eventsApi';
 import { SortOrderServices, ISortOrderParams } from 'services/sortOrderServices';
-import { NotificationServices } from 'services/notificationServices';
 import { IEvent } from 'models/IEvent';
 import { IQueryParams } from 'services/queryParamsService';
 import { ApiError } from 'models/ApiError';
@@ -14,16 +12,10 @@ import { ApiError } from 'models/ApiError';
 @autoinject()
 export class EventsList extends ItemsList {
 
-  // The parent class ItemsList requires Router, NotificationServices and EventAggregator
-  constructor(private api: EventsApi,
-              private sortOrderServices: SortOrderServices,
-              router: Router,
-              notifications: NotificationServices,
-              eventAggregator: EventAggregator, ) {
-    super(router, notifications, eventAggregator);
+  constructor(protected api: EventsApi,
+              private sortOrderServices: SortOrderServices) {
+    super(api);
     
-    this.itemDesc = 'Event';
-
     this.listParams =
       {
         listHeader: "Events",
@@ -36,7 +28,7 @@ export class EventsList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Event", tooltipPlacement: "bottom", onClick: () => this.newItem("eventAdd"), glyph: "fas fa-plus", label: "Add Event" },
+        { tooltipTitle: "New Event", tooltipPlacement: "bottom", onClick: () => this.newItem("eventEdit"), glyph: "fas fa-plus", label: "Add Event" },
        ];
 
     this.columns =
@@ -45,19 +37,20 @@ export class EventsList extends ItemsList {
         { value: (event: IEvent) => event.eventNo, propertyName: "eventNo", header: "Event No", className: "sortable", sortable: true, defaultSortOrder: '+' },
         { value: (event: IEvent) => event.year, propertyName: "year", header: "Year", className: "sortable", sortable: true, defaultSortOrder: '+' },
         { value: (event: IEvent) => event.tournament.name, propertyName: "tournamentId", header: "Tournament", className: "sortable", sortable: true, defaultSortOrder: '+' },
-        { value: (event: IEvent) => event.status, propertyName: "status", header: "Status", className: "sortable", sortable: false, defaultSortOrder: '+' },
+        { value: (event: IEvent) => event.eventStatus.status, propertyName: "status", header: "Status", className: "sortable", sortable: false, defaultSortOrder: '+' },
       ];
 
     this.actions =
       [
-        { action: (event) => this.editItem(event, "eventEdit"), className: "actionButton", tooltip: "Edit Event", glyph: "fas fa-edit"},
-        { action: (event) => this.deleteItem(event, "eventDelete"), className: "actionButton delete", tooltip: "Delete Event", glyph: "fas fa-trash" },
+        { action: (event: IEvent) => this.editItem(event, "eventEdit"), className: "actionButton", tooltip: "Edit Event", glyph: "fas fa-edit"},
+        { action: (event: IEvent) => this.eventDetails(event, "eventDetails"), className: "actionButton", tooltip: "Event Details", glyph: "fas fa-list-ol" },
+        { action: (event: IEvent) => this.deleteItem(event), className: "actionButton delete", tooltip: "Delete Event", glyph: "fas fa-trash" },
       ];
   }
 
-  fetchData = async (params: IQueryParams): Promise<IEvent[] | ApiError> => {
-    return this.api.get(params);
+  eventDetails(event: IEvent, route: string) {
+    console.log(`Event Details for  ${event.tournament.name}`);
+    this.router.navigateToRoute(route, event);
   }
-
 
 }

@@ -13,13 +13,16 @@ import { PromptDialogServices } from './promptDialogServices';
 export interface IFilterParams {
   filterString: string;
   filterOn: string;
-  filterOnLabel: string
+  filterOnLabel: string;
+  useEquals?: boolean;
+  hideFilter?: boolean;
 }
 
 export interface IItemsListParams {
   listHeader: string;
   sortOrderParams: ISortOrderParams;
   filterParams: IFilterParams;
+  additionalParams?: string;
   top?: number
   //pageSize: 25;
   //skip: 0;
@@ -62,10 +65,10 @@ export class ItemsList {
   public items: IItem[] = [];
   private itemsListChangedSubscription: Subscription;
 
-  private router: Router;
-  private notificationService: NotificationServices;
-  private eventAggregator: EventAggregator;
-  private promptDialogServices: PromptDialogServices;
+  protected router: Router;
+  protected notificationService: NotificationServices;
+  protected eventAggregator: EventAggregator;
+  protected promptDialogServices: PromptDialogServices;
 
   constructor(protected api: IResourceApi) { 
     this.router = Container.instance.get(Router);
@@ -75,17 +78,15 @@ export class ItemsList {
     this.api = api;
   }
 
-  async bind() {
+  async attached() {
     const result = await this.getItems();
     if (result instanceof ApiError) {
 
     } else {
       this.items = result;
+      console.log(this.items);
     }
-  }
-
-  attached() {
-    this.addSubscriptions();
+     this.addSubscriptions();
   }
 
   detached() {
@@ -96,9 +97,13 @@ export class ItemsList {
     let params: IQueryParams = {
       orderby: this.listParams.sortOrderParams,
       filter: `${this.listParams.filterParams.filterString ?
-        `${this.listParams.filterParams.filterOn} like '%${this.listParams.filterParams.filterString}%'`
+        (this.listParams.filterParams.useEquals ?
+          `${this.listParams.filterParams.filterOn}='${this.listParams.filterParams.filterString}'`
+          : `${this.listParams.filterParams.filterOn} like '%${this.listParams.filterParams.filterString}%'`
+        )
         : ''}`,
       top: this.listParams.top,
+      additional: this.listParams.additionalParams
     };
     const result: any = await this.api.get(params);
     //console.log(result);
@@ -121,8 +126,9 @@ export class ItemsList {
   // }
 
 
-  async deleteItem(item: IItem, itemDesc: string) {
+  async deleteItem(item: IItem) {
     const title = `Delete ${this.resourceDesc}`;
+    const itemDesc = this.api.itemDescription(item);
     const verified = await this.promptDialogServices.YesNo(`${title}: ${itemDesc}?`);
     if(verified) {
       const result = await this.api.delete(item.id);

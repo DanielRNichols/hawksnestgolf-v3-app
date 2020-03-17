@@ -10,6 +10,7 @@ import { ISelectionEntry } from "./ISelectionEntry";
 import { ISelectionPick } from "./ISelectionPick";
 import { IYear } from "./IYear";
 import { IEventStatus } from "./IEventStatus";
+import { IEventResult } from "./IEventResult";
 
 export type IItem = 
   IGolfer | 
@@ -20,6 +21,7 @@ export type IItem =
   IEntry| 
   IPick | 
   IFieldEntry | 
+  IEventResult |
   ISelectionEntry | 
   ISelectionPick |
   IYear |

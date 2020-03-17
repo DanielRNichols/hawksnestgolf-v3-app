@@ -1,27 +1,16 @@
 import { autoinject } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
-import { Router } from "aurelia-router";
 import { ItemsList } from '../../services/itemsListService';
 import { GolfersApi } from '../../services/hawksnestgolfApi/golfersApi';
 import { SortOrderServices, ISortOrderParams } from 'services/sortOrderServices';
-import { NotificationServices } from 'services/notificationServices';
 import { IGolfer } from 'models/IGolfer';
-import { IQueryParams } from 'services/queryParamsService';
-import { ApiError } from 'models/ApiError';
+
 
 @autoinject()
 export class GolfersList extends ItemsList {
 
-  // The parent class ItemsList requires Router, NotificationServices and EventAggregator
-  constructor(private api: GolfersApi,
-              private sortOrderServices: SortOrderServices,
-              router: Router,
-              notifications: NotificationServices,
-              eventAggregator: EventAggregator) {
-    super(router, notifications, eventAggregator);
-
-    this.itemDesc = "Golfer";
-
+  constructor(protected api: GolfersApi,
+              private sortOrderServices: SortOrderServices) {
+    super(api);
 
     this.listParams =
       {
@@ -35,7 +24,7 @@ export class GolfersList extends ItemsList {
 
     this.toolbar =
       [
-        { tooltipTitle: "New Golfer", tooltipPlacement: "bottom", onClick: () => this.newItem("golferAdd"), glyph: "fas fa-plus", label: "Add Golfer" },
+        { tooltipTitle: "New Golfer", tooltipPlacement: "bottom", onClick: () => this.newItem("golferEdit"), glyph: "fas fa-plus", label: "Add Golfer" },
         { tooltipTitle: "Update Rankings", tooltipPlacement: "bottom", onClick: () => this.updateRankings(), glyph: "fas fa-sync" , label: "Update Rankings"},
 
       ];
@@ -55,12 +44,8 @@ export class GolfersList extends ItemsList {
     this.actions =
       [
         { action: (item: IGolfer) => this.editItem(item, "golferEdit"), className: "actionButton", tooltip: "Edit Item", glyph: "fas fa-edit"},
-        { action: (item: IGolfer) => this.deleteItem(item, "golferDelete"), className: "actionButton delete", tooltip: "Delete Item", glyph: "fas fa-trash" },
+        { action: (item: IGolfer) => this.deleteItem(item), className: "actionButton delete", tooltip: "Delete Item", glyph: "fas fa-trash" },
       ];
-  }
-
-  fetchData = async (params: IQueryParams): Promise<IGolfer[] | ApiError> => {
-    return this.api.get(params);
   }
 
   updateRankings() {

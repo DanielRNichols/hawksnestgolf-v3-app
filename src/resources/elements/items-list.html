@@ -9,7 +9,7 @@
         <i class="busySpinner fas fa-spinner fa-spin fa-sm" if.bind="apiIsBusy || isLoading || router.isNavigating & debounce:250"></i>
       </div>
       <div class="col-sm">
-        <form class="form-inline">
+        <form if.bind="showFilter" class="form-inline">
           <label class="control-label" style="margin-right:5px">${listParams.filterParams.filterOnLabel}</label>
             <input class="form-control" type="text" placeholder="Filter"
                     value.bind="listParams.filterString  & debounce:850" input.trigger="filterChanged($event.target.value)"/>
@@ -19,8 +19,6 @@
         <toolbar class="toolbar" toolbar.bind="toolbar"></toolbar>
       </div>
      </div>
-
-     
 
       <table class="table table-striped">
           <tr>

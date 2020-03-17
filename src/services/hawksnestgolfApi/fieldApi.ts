@@ -7,7 +7,11 @@ export class FieldApi extends ResourceApi<IFieldEntry> {
     super('field', "Field Entry");
   }
 
+  itemDescription(fieldEntry: IFieldEntry) {
+    return fieldEntry.golfer ? fieldEntry.golfer.name : fieldEntry.id.toString();
+  }
+
   deleteAll() {
-    return this.api.delete('fields', 'all');
+    return this.api.deleteItem('fields', 'all');
   }
 }

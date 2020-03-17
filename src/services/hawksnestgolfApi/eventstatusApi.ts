@@ -5,4 +5,6 @@ export class EventStatusApi extends ResourceApi<IEventStatus> {
   constructor() {
     super('eventstatus', "Event Status");
   }
+  itemDescription(eventStatus: IEventStatus) {return eventStatus.status}
+
 }

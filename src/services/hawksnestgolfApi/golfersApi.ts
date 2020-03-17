@@ -7,6 +7,8 @@ export class GolfersApi extends ResourceApi<IGolfer> {
     super('golfers', "Golfer");
   }
 
+  itemDescription(golfer: IGolfer) {return golfer.name}
+
   updateRankings() {
     return this.api.patch('golfers/rankings');
   }

@@ -1,4 +1,5 @@
 <template>
+  <require from="../../resources/elements/validation-errors.html"></require>
   <div class="container">
     <div class="card">
       <div class="card-body">
@@ -7,7 +8,7 @@
         <form>
           <div class="form-group row">
             <label for="eventNo" class="col-sm-2 col-form-label">Event #</label>
-            <input id="eventNo"  type="text" placeholder="Event #" class="col-sm-10 form-control" value.bind="event.eventNo" />
+            <input id="eventNo"  type="text" placeholder="Event #" class="col-sm-10 form-control" value.bind="event.eventNo & validate" />
           </div>
 
           <div class="form-group row">
@@ -36,9 +37,11 @@
             <input id="fee" class="col-sm-10 form-control" type="text" placeholder="Entry Fee" value.bind="event.entryFee" />
            </div>
 
-          <input type="button" click.delegate="formOKOnClick()" class="btn btn-primary offset-sm-2" value="${formOKLabel}" />
-          <input type="button" click.delegate="formCancelOnClick()" class="btn btn-primary" value="${formCancelLabel}" />
-        </form>
+           <input class="btn btn-primary offset-sm-2 ${isValidated ? '' : 'disabled'}"  type="button" click.delegate="formOKOnClick()" value="${formOKLabel}" disabled.bind="!isValidated" />
+           <input class="btn btn-primary" type="button" click.delegate="formCancelOnClick()" value="${formCancelLabel}" />
+ 
+           <validation-errors controller.bind="validationController"></validation-errors>
+         </form>
 
       </div>
 

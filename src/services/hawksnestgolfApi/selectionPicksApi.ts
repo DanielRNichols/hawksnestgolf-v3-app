@@ -1,30 +1,13 @@
-import { autoinject } from 'aurelia-framework';
 import {ISelectionPick} from '../../models/ISelectionPick';
-import { ApiDataService } from "./apiDataService";
-import { IResourceApi } from './IResourceApi';
-import { IQueryParams } from 'services/queryParamsService';
-import { ApiError } from 'models/ApiError';
+import { ResourceApi } from './resourceApi';
 
-@autoinject()
-export class SelectionPicksApi implements IResourceApi {
-  private resourceName: string = 'selectionpicks';
-  public resourceDescription = "Selection Pick";
-  private api: ApiDataService;
+export class SelectionPicksApi extends ResourceApi<ISelectionPick> {
 
-  constructor(api: ApiDataService) {
-    this.api = api;
+  constructor() {
+    super('selectionPicks', "SelectionPick");
   }
 
-  public async get(params: IQueryParams = {}): Promise<ISelectionPick[] | ApiError> {
-    return this.api.fetch<ISelectionPick>(this.resourceName, params);
+  itemDescription(selectionPick: ISelectionPick) {
+    return selectionPick.id.toString();
   }
-
-  public async getById(id: string | number): Promise<ISelectionPick | ApiError> {
-    return this.api.fetchById<ISelectionPick>(this.resourceName, id);
-  }
-
-  public async add(selectionPick: ISelectionPick) {
-    return this.api.post(this.resourceName, selectionPick);
-  }
-
 }

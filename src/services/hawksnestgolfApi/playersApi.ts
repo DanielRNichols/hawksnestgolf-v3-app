@@ -5,4 +5,7 @@ export class PlayersApi extends ResourceApi<IPlayer> {
   constructor() {
     super('players', "Player");
   }
+
+  itemDescription(player: IPlayer) {return player.name}
+
 }

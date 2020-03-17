@@ -41,106 +41,74 @@ export class ApiDataService {
     );
   }
 
-  async fetch<T extends IItem>(resourceName: string, params: IQueryParams = {}): Promise<T[] | ApiError>  {
+  async fetchItems<T extends IItem>(resourceName: string, params: IQueryParams = {}): Promise<T[] | ApiError>  {
     const queryString = this.queryParamsService.getQueryString(params);
     const url = `${resourceName}${queryString}`;
+
+    const result = await this.fetch(url);
+    if(result instanceof ApiError) {
+      return result;
+    } else {
+      console.log(result as T[]);
+      return result as T[];
+    }    
     console.log(url);
+ }
 
-    try {
-      const response = await this.httpClient.fetch(url);
-      const data = await response.json();
-      //console.log(data);
-      if(response.ok) {
-        //console.log(data);
-        return data as T[];
-      } else {
-        return new ApiError(response.status, data.message);
-      }
-    } catch {
-      return new ApiError(500, "Server error");
-    }
-  }
-
-  async fetchById<T extends IItem>(resourceName: string, id: string | number): Promise<T | ApiError>  {
+  async fetchItemById<T extends IItem>(resourceName: string, id: string | number): Promise<T | ApiError>  {
     const url = `${resourceName}/${id}`;
-    console.log(url);
-    try {
-      const response = await this.httpClient.fetch(url);
-      const data = await response.json();
-      if(response.ok) {
-        //console.log(data);
-        return data as T;
-      } else {
-        return new ApiError(response.status, data.message);
-      }
-    } catch {
-      return new ApiError(500, "Server error");
+
+    const result = await this.fetch(url);
+    if(result instanceof ApiError) {
+      return result;
+    } else {
+      console.log(result as T);
+      return result as T;
     }
   }
 
-  async post<T extends IItem>(resourceName: string, item: T): Promise<string | ApiError> {
+  async postItem<T extends IItem>(resourceName: string, item: T): Promise<string | ApiError> {
     const url = resourceName;
-    console.log(`In post: url = ${url}`);
-    try {
-      const response = await this.httpClient.fetch(url, {method: 'POST', body: json(item)});
-      const data = await response.json();
-      if(response.ok) {
-        //console.log(data);
-        return data.id;
-      } else {
-        return new ApiError(response.status, data.message);
-      }
-    } catch {
-      return new ApiError(500, "Server error");
+
+    const result = await this.fetch(url, {method: 'POST', body: json(item)});
+    if(result instanceof ApiError) {
+      return result;
+    } else {
+      return result.id;
     }
   }
   
-  async put<T extends IItem>(resourceName: string, item: T): Promise<T | ApiError> {
+  async putItem<T extends IItem>(resourceName: string, item: T): Promise<T | ApiError> {
     const url = `${resourceName}/${item.id}`;
-    console.log(url);
-    try {
-      const response = await this.httpClient.fetch(url, {method: 'PUT', body: json(item)});
-      const data = await response.json();
-      if(response.ok) {
-        console.log(data as T);
-        return data as T;
-      } else {
-        return new ApiError(response.status, data.message);
-      }
-    } catch (err) {
-      console.log(err.message);
-      return new ApiError(500, "Server error");
+
+    const result = await this.fetch(url, {method: 'PUT', body: json(item)});
+    if(result instanceof ApiError) {
+      return result;
+    } else {
+      console.log(result as T);
+      return result as T;
+    }
+  }  
+
+  async deleteItem(resourceName: string, id: string | number): Promise<boolean | ApiError> {
+    const url = `${resourceName}/${id}`;
+    const result = await this.fetch(url, {method: 'DELETE'});
+    if(result instanceof ApiError) {
+      return result;
+    } else {
+      return result.success;
     }
   }
-  
-  // patch currently just used for updating rankings, may need to expand this later
-  async patch(resourceName: string): Promise<boolean| ApiError> {
-    const url = resourceName;
+
+  async fetch(url: string, options?: RequestInit): Promise<any | ApiError>  {
     console.log(url);
     try {
       this.apiIsRequesting();
-      const response = await this.httpClient.fetch(url, {method: 'PATCH'});
+      const response = await this.httpClient.fetch(url, options);
       const data = await response.json();
       this.apiIsDone();
       if(response.ok) {
-         return true;
-      } else {
-        return new ApiError(response.status, data.message);
-      }
-    } catch (err) {
-      console.log(err.message);
-      return new ApiError(500, "Server error");
-    }
-  }
-  
-  async delete(resourceName: string, id: string | number): Promise<boolean | ApiError> {
-    const url = `${resourceName}/${id}`;
-    console.log(url);
-    try {
-      const response = await this.httpClient.fetch(url, {method: 'DELETE'});
-      const data = await response.json();
-      if(response.ok) {
-        return data.success;
+        return data;
       } else {
         return new ApiError(response.status, data.message);
       }
@@ -149,6 +117,17 @@ export class ApiDataService {
     }
   }
 
+  // patch currently just used for updating rankings, may need to expand this later
+  async patch(resourceName: string): Promise<boolean| ApiError> {
+    const url = resourceName;
+    const result = await this.fetch(url, {method: 'PATCH'});
+    if(result instanceof ApiError) {
+      return result;
+    } else {
+      return true;
+    }
+  }
+    
   async fetchJson(resourceName: string, params: IQueryParams = {}): Promise<any | ApiError>  {
     const queryString = this.queryParamsService.getQueryString(params);
     const url = `${resourceName}${queryString}`;
