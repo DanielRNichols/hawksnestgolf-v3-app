@@ -5,6 +5,3 @@ export interface IBet {
   defAmount: number;
 }
 
-export interface IDbBet extends IBet {
-  resourceName: string;
-}

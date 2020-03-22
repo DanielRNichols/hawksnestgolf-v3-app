@@ -37,20 +37,25 @@ export class EventsList extends ItemsList {
         { value: (event: IEvent) => event.eventNo, propertyName: "eventNo", header: "Event No", className: "sortable", sortable: true, defaultSortOrder: '+' },
         { value: (event: IEvent) => event.year, propertyName: "year", header: "Year", className: "sortable", sortable: true, defaultSortOrder: '+' },
         { value: (event: IEvent) => event.tournament.name, propertyName: "tournamentId", header: "Tournament", className: "sortable", sortable: true, defaultSortOrder: '+' },
-        { value: (event: IEvent) => event.eventStatus.status, propertyName: "status", header: "Status", className: "sortable", sortable: false, defaultSortOrder: '+' },
+        { value: (event: IEvent) => event.eventStatus.status, propertyName: "status", header: "Status", className: "", sortable: false, defaultSortOrder: '+' },
       ];
 
     this.actions =
       [
         { action: (event: IEvent) => this.editItem(event, "eventEdit"), className: "actionButton", tooltip: "Edit Event", glyph: "fas fa-edit"},
-        { action: (event: IEvent) => this.eventDetails(event, "eventDetails"), className: "actionButton", tooltip: "Event Details", glyph: "fas fa-list-ol" },
+        { action: (event: IEvent) => this.eventResults(event, "eventResults"), className: "actionButton", tooltip: "Event Results", glyph: "fas fa-dollar-sign" },
+        { action: (event: IEvent) => this.eventTeams(event, "eventTeams"), className: "actionButton", tooltip: "Event Teams", glyph: "fas fa-users" },
         { action: (event: IEvent) => this.deleteItem(event), className: "actionButton delete", tooltip: "Delete Event", glyph: "fas fa-trash" },
       ];
   }
 
-  eventDetails(event: IEvent, route: string) {
+  eventResults(event: IEvent, route: string) {
     console.log(`Event Details for  ${event.tournament.name}`);
-    this.router.navigateToRoute(route, event);
+    this.router.navigateToRoute(route, {eventId: event.id, eventDesc: `${event.year} ${event.tournament.name}`});
   }
 
+  eventTeams(event: IEvent, route: string) {
+    console.log(`Teams for  ${event.tournament.name}`);
+    this.router.navigateToRoute(route, {eventId: event.id, eventDesc: `${event.year} ${event.tournament.name}`});
+  }
 }

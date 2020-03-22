@@ -81,7 +81,8 @@ export class ItemsList {
   async attached() {
     const result = await this.getItems();
     if (result instanceof ApiError) {
-
+      this.notificationService.warning("", "No items found");
+      this.items = [];
     } else {
       this.items = result;
       console.log(this.items);

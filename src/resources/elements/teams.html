@@ -1,0 +1,37 @@
+﻿<template>
+  <require from="resources/elements/picks.html"></require>
+
+  <table class="table table-condensed teamLbTable">
+
+      <span class="eventTitle">${title}</span>
+
+    <thead>
+      <tr class="tableHeader">
+        <th class="text-center">Pos</th>
+        <th class="text-center">Pick #</th>
+        <th>Owner</th>
+        <th class="text-center">Points</th>
+      </tr>
+    </thead>
+    <tbody repeat.for="team of teams">
+      <tr>
+        <td click.delegate="toggleTeamIsOpen(team)">
+          <span class="expandTeamIcon ${team.isOpen ? 'fas fa-chevron-circle-up' : 'fas fa-chevron-circle-down'}"></span>
+          ${team.position}
+        </td>
+        <td class="text-center">${team.teamNo}</td>
+        <td>${team.teamName}</td>
+        <td class="text-center">${team.pointTotal}</td>
+      </tr>
+      <tr if.bind="team.isOpen">
+        <div class="container">
+          <td class="teamPlayerCell" colspan="5">
+            <picks picks.bind="team.picks" title.bind="team.teamName"></picks>
+          </td>
+        </div>
+      </tr>
+      
+    </tbody>
+  </table>
+</template>
+

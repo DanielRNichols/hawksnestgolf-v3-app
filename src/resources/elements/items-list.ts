@@ -1,22 +1,23 @@
 import { autoinject, bindable, bindingMode } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { SortOrderServices } from "../../services/sortOrderServices";
-import { IItemsListParams } from '../../services/itemsListService';
+import { IItemsListParams, IColumnParams, IToolbarParams, IActionParams } from '../../services/itemsListService';
+import { IItem } from 'models/IItem';
 
 @autoinject()
 export class ItemsList {
-    @bindable items;
-    @bindable columns;
+    @bindable items: IItem[];
+    @bindable columns: IColumnParams;
     @bindable listParams: IItemsListParams;
-    @bindable toolbar;
-    @bindable actions;
+    @bindable toolbar: IToolbarParams;
+    @bindable actions: IActionParams;
 
     private sortOrderServices: SortOrderServices;
     private eventAggregator: EventAggregator;
     private pageSize: number = 25;
     private showFilter = true;
     private apiIsBusy = false;
-    private isLoading;
+    private isLoading: boolean;
 
     rowNum = 0;
 

@@ -1,5 +1,6 @@
 import {IEntry} from "./IEntry";
 import {IGolfer} from "./IGolfer";
+import { IGolferResult } from "./IGolferResult";
 
 export interface IPick {
     id : number;
@@ -8,4 +9,5 @@ export interface IPick {
     golferId : number;
     golfer? : IGolfer;
     round : number;
+    golferResult: IGolferResult;
 }

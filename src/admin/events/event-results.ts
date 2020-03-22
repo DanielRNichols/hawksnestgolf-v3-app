@@ -4,13 +4,9 @@ import { SortOrderServices } from "services/sortOrderServices";
 import { ItemsList } from "services/itemsListService";
 import { IEventResult } from "models/IEventResult";
 import { IEvent } from "models/IEvent";
-import { ApiError } from "models/ApiError";
-import { IQueryParams } from "services/queryParamsService";
 
 @autoinject
 export class EventResultsEdit extends ItemsList {
-
-  event: IEvent;
 
   constructor(private eventResultsApi: EventResultsApi,
     private sortOrderServices: SortOrderServices) {
@@ -47,20 +43,16 @@ export class EventResultsEdit extends ItemsList {
       ];
   }
 
-  async activate(event: IEvent) {
-    this.event = event;
-    this.listParams.listHeader = `${event.year} ${event.tournament.name}`;
+  // in activate set up the filterString so that only the results for this given event are retrieved in appended (in ItemsList)
+  async activate(params: any) {
+    const eventId = params.eventId ? params.eventId : 0;
+    if(eventId == 0) {
+      return;
+    }
+    this.listParams.listHeader = params.eventDesc ? params.eventDesc: this.listParams.listHeader;
     this.listParams.filterParams.filterOn = "eventid";
-    this.listParams.filterParams.filterString = `${event.id}`;
+    this.listParams.filterParams.filterString = `${eventId}`;
     this.listParams.filterParams.useEquals =  true;
     this.listParams.filterParams.hideFilter = true;
   }
-
-  // async getItems(): Promise<IEventResult[] | ApiError> {
-  //   const result = await this.eventResultsApi.getByEventId(this.event.id);
-  //   console.log(result);
-
-  //   return result;
-  // }
-
 }

@@ -22,7 +22,11 @@ export class ResourceApi<T extends IItem> implements IResourceApi {
   }
 
   public async get(params: IQueryParams = {}): Promise<T[] | ApiError> {
-    return this.api.fetchItems<T>(this.resourceName, params);
+    const result = await this.api.fetchItems<T>(this.resourceName, params);
+    if(result instanceof ApiError) {
+      console.log(result);
+    }
+    return result;
   }
 
   public async getById(id: string | number): Promise<T | ApiError> {

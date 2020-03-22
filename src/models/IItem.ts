@@ -11,6 +11,7 @@ import { ISelectionPick } from "./ISelectionPick";
 import { IYear } from "./IYear";
 import { IEventStatus } from "./IEventStatus";
 import { IEventResult } from "./IEventResult";
+import { IEventDetails } from "./IEventDetails";
 
 export type IItem = 
   IGolfer | 
@@ -27,7 +28,3 @@ export type IItem =
   IYear |
   IEventStatus;
 
-  export interface IDbItem {
-    itemType: IItem;
-    resourceName: string;
-  }

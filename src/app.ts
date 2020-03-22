@@ -62,7 +62,8 @@ export class App {
           // events
           {route: ["admin/events"],      moduleId: "admin/events/events-list", title: "Events",       name: "eventsList",  nav: true},
           {route: ["admin/eventEdit"],   moduleId: "admin/events/event-edit",   title: "Edit Event",   name: "eventEdit",   nav: false},
-          {route: ["admin/eventDetails"],   moduleId: "admin/events/event-details",   title: "Event Details",   name: "eventDetails",   nav: false},
+          {route: ["admin/eventResults"],   moduleId: "admin/events/event-results",   title: "Event Results",   name: "eventResults",   nav: false},
+          {route: ["admin/eventTeams"],   moduleId: "admin/events/event-teams",   title: "Event Teams",   name: "eventTeams",   nav: false},
 
 
           {route: ["admin/entries"], moduleId: "admin/entries/entries-list", title: "Entries", name: "entries", nav: true},

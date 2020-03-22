@@ -1,0 +1,28 @@
+﻿<template bindable="title, picks">
+
+    <table class="table table-condensed teamTable">
+
+        <span class="teamTitle">${title}</span>
+
+      <thead>
+        <tr class="tableHeader">
+          <th class="pickNum">#</th>
+          <th class="golferPos">Pos</th>
+          <th class="golferName">Name</th>
+          <th class="golferPoints">Pts</th>
+        </tr>
+      </thead>
+      <tbody repeat.for="pick of picks">
+        <tr>
+          <td class="text-center">${pick.round}</td>
+          <td class="text-center">${pick.golferResult.position}</td>
+          <td>
+            <!-- <img class="flag" src.bind="$parent.getFlagImage(pick.golfer.country)" />  -->
+            ${pick.golfer.name}
+          </td>
+          <td class="text-center">${pick.golferResult.points}</td>
+        </tr>
+      </tbody>
+    </table>
+
+</template>

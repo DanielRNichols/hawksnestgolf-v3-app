@@ -32,7 +32,7 @@ export class ApiDataService {
             return request;
           },
           response(response) {
-            //console.log(`Received ${response.status} ${response.url}`);
+            console.log(`Received ${response.status} ${response.url}`);
             return response;
           }
         });
@@ -105,6 +105,7 @@ export class ApiDataService {
     try {
       this.apiIsRequesting();
       const response = await this.httpClient.fetch(url, options);
+      console.log(response);
       const data = await response.json();
       this.apiIsDone();
       if(response.ok) {
@@ -112,7 +113,11 @@ export class ApiDataService {
       } else {
         return new ApiError(response.status, data.message);
       }
-    } catch {
+    } catch (res) {
+      this.apiIsDone();
+      if(res instanceof Response) {
+        return new ApiError(res.status, res.statusText);
+      }
       return new ApiError(500, "Server error");
     }
   }
